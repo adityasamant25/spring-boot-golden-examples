@@ -1,9 +1,16 @@
 package com.adityasamant.learnings.customersbasic.web.controllers;
 
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.adityasamant.learnings.customersbasic.domain.Customer;
 import com.adityasamant.learnings.customersbasic.domain.CustomerCollectionRepository;
 import com.adityasamant.learnings.customersbasic.domain.CustomerNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,15 +19,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(CustomerController.class)
@@ -36,14 +34,16 @@ class CustomerControllerIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        customers = List.of(new Customer(1, "John", "Doe", "Australia"),
+        customers = List.of(
+                new Customer(1, "John", "Doe", "Australia"),
                 new Customer(2, "Alice", "Smith", "USA"),
                 new Customer(3, "Bob", "Stevens", "England"));
     }
 
     @Test
     void findAll() throws Exception {
-        String jsonResponse = """
+        String jsonResponse =
+                """
                 [
                     {
                         "id":1,
@@ -67,73 +67,75 @@ class CustomerControllerIntegrationTest {
                 """;
         when(customerCollectionRepository.findAll()).thenReturn(customers);
         mvc.perform(get("/api/customers"))
-                .andExpect(status().isOk()).andExpect(content().json(jsonResponse));
+                .andExpect(status().isOk())
+                .andExpect(content().json(jsonResponse));
     }
 
     @Test
     void findByValidId() throws Exception {
         when(customerCollectionRepository.findById(1)).thenReturn(Optional.of(customers.getFirst()));
 
-        var customer = customers.getFirst();
-        var json = STR."""
-        {
-            "id":\{customer.id()},
-            "firstName":"\{customer.firstName()}",
-            "lastName":"\{customer.lastName()}",
-            "country":"\{customer.country()}"
-        }
-        """;
-        mvc.perform(get("/api/customers/1")).
-                andExpect(status().isOk()).
-                andExpect(content().json(json));
-    }
+        String json =
+                """
+                    {
+                        "id":1,
+                        "firstName":"John",
+                        "lastName":"Doe",
+                        "country":"Australia"
+                    }
+                """;
 
+        mvc.perform(get("/api/customers/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().json(json));
+    }
 
     @Test
     void findByInvalidId() throws Exception {
 
         when(customerCollectionRepository.findById(999)).thenThrow(CustomerNotFoundException.class);
 
-        mvc.perform(get("/api/customers/999")).
-                andExpect(status().isNotFound());
+        mvc.perform(get("/api/customers/999")).andExpect(status().isNotFound());
     }
 
     @Test
     void createValidCustomer() throws Exception {
         var customer = new Customer(4, "Trent", "Davids", "Germany");
         doNothing().when(customerCollectionRepository).save(customer);
-        var json = STR."""
-        {
-            "id":\{customer.id()},
-            "firstName":"\{customer.firstName()}",
-            "lastName":"\{customer.lastName()}",
-            "country":"\{customer.country()}"
-        }
-        """;
+        String json =
+                """
+                    {
+                        "id":4,
+                        "firstName":"Trent",
+                        "lastName":"Davids",
+                        "country":"Germany"
+                    }
+                """;
 
-        mvc.perform(post("/api/customers").contentType("application/json").content(json)).
-                andExpect(status().isCreated());
+        mvc.perform(post("/api/customers").contentType("application/json").content(json))
+                .andExpect(status().isCreated());
 
-        verify(customerCollectionRepository,times(1)).save(customer);
+        verify(customerCollectionRepository, times(1)).save(customer);
     }
 
     @Test
     void createInvalidCustomer() throws Exception {
         var customer = new Customer(4, "", "Davids", "France");
         doNothing().when(customerCollectionRepository).save(customer);
-        var json = STR."""
-        {
-            "id":\{customer.id()},
-            "firstName":"\{customer.firstName()}",
-            "lastName":"\{customer.lastName()}",
-            "country":"\{customer.country()}"
-        }
-        """;
+        String json =
+                """
+                    {
+                        "id":4,
+                        "firstName":"",
+                        "lastName":"Davids",
+                        "country":"France"
+                    }
+                """;
 
-        mvc.perform(post("/api/customers").contentType("application/json").content(json)).
-                andExpect(status().isBadRequest());
+        mvc.perform(post("/api/customers").contentType("application/json").content(json))
+                .andExpect(status().isBadRequest());
 
-        verify(customerCollectionRepository,times(0)).save(customer);
+        verify(customerCollectionRepository, times(0)).save(customer);
     }
 
     @Test
@@ -142,18 +144,19 @@ class CustomerControllerIntegrationTest {
         when(customerCollectionRepository.checkInvalidCustomer(1)).thenReturn(false);
         doNothing().when(customerCollectionRepository).save(updated);
 
-        var json = STR."""
-        {
-            "id":\{updated.id()},
-            "firstName":"\{updated.firstName()}",
-            "lastName":"\{updated.lastName()}",
-            "country":"\{updated.country()}"
-        }
-        """;
+        String json =
+                """
+                    {
+                        "id":1,
+                        "firstName":"NewFirstName",
+                        "lastName":"NewLastName",
+                        "country":"Spain"
+                    }
+                """;
 
-        mvc.perform(put("/api/customers/1").contentType("application/json").content(json)).
-                andExpect(status().isNoContent());
-        verify(customerCollectionRepository,times(1)).save(updated);
+        mvc.perform(put("/api/customers/1").contentType("application/json").content(json))
+                .andExpect(status().isNoContent());
+        verify(customerCollectionRepository, times(1)).save(updated);
     }
 
     @Test
@@ -162,18 +165,19 @@ class CustomerControllerIntegrationTest {
         when(customerCollectionRepository.checkInvalidCustomer(1)).thenReturn(false);
         doNothing().when(customerCollectionRepository).save(updated);
 
-        var json = STR."""
-        {
-            "id":\{updated.id()},
-            "firstName":"\{updated.firstName()}",
-            "lastName":"\{updated.lastName()}",
-            "country":"\{updated.country()}"
-        }
-        """;
+        String json =
+                """
+                    {
+                        "id":1,
+                        "firstName":"NewFirstName",
+                        "lastName":"",
+                        "country":""
+                    }
+                """;
 
-        mvc.perform(put("/api/customers/1").contentType("application/json").content(json)).
-                andExpect(status().isBadRequest());
-        verify(customerCollectionRepository,times(0)).save(updated);
+        mvc.perform(put("/api/customers/1").contentType("application/json").content(json))
+                .andExpect(status().isBadRequest());
+        verify(customerCollectionRepository, times(0)).save(updated);
     }
 
     @Test
@@ -182,18 +186,19 @@ class CustomerControllerIntegrationTest {
         when(customerCollectionRepository.checkInvalidCustomer(4)).thenReturn(true);
         doNothing().when(customerCollectionRepository).save(updated);
 
-        var json = STR."""
-        {
-            "id":\{updated.id()},
-            "firstName":"\{updated.firstName()}",
-            "lastName":"\{updated.lastName()}",
-            "country":"\{updated.country()}"
-        }
-        """;
+        String json =
+                """
+                    {
+                        "id":4,
+                        "firstName":"NewFirstName",
+                        "lastName":"NewLastName",
+                        "country":"NewCountry"
+                    }
+                """;
 
-        mvc.perform(put("/api/customers/4").contentType("application/json").content(json)).
-                andExpect(status().isNotFound());
-        verify(customerCollectionRepository,times(0)).save(updated);
+        mvc.perform(put("/api/customers/4").contentType("application/json").content(json))
+                .andExpect(status().isNotFound());
+        verify(customerCollectionRepository, times(0)).save(updated);
     }
 
     @Test
@@ -203,8 +208,6 @@ class CustomerControllerIntegrationTest {
 
         mvc.perform(delete("/api/customers/1")).andExpect(status().isNoContent());
 
-        verify(customerCollectionRepository,times(1)).delete(1);
+        verify(customerCollectionRepository, times(1)).delete(1);
     }
-
-
 }

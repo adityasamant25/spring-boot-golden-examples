@@ -1,19 +1,18 @@
 package com.adityasamant.learnings.customersbasic.web.controllers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.adityasamant.learnings.customersbasic.domain.Customer;
 import com.adityasamant.learnings.customersbasic.domain.CustomerCollectionRepository;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CustomerControllerTest {
 
     CustomerCollectionRepository customerCollectionRepository = null;
     CustomerController controller = null; // Arrange
+
     @BeforeEach
     void setUp() {
         customerCollectionRepository = new CustomerCollectionRepository();
@@ -26,19 +25,19 @@ class CustomerControllerTest {
     @Test
     void findAllWithBlankUserHeader() {
         List<Customer> customers = controller.findAll(""); // Act
-        assertEquals(3, customers.size());// Assert
+        assertEquals(3, customers.size()); // Assert
     }
 
     @Test
     void findAllWithNullUserHeader() {
         List<Customer> customers = controller.findAll(null); // Act
-        assertEquals(3, customers.size());// Assert
+        assertEquals(3, customers.size()); // Assert
     }
 
     @Test
     void findAllWithUserHeader() {
         List<Customer> customers = controller.findAll("debug"); // Act
-        assertEquals(3, customers.size());// Assert
+        assertEquals(3, customers.size()); // Assert
     }
 
     @Test

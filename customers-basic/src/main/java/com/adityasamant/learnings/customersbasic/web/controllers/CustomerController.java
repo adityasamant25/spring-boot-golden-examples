@@ -4,18 +4,16 @@ import com.adityasamant.learnings.customersbasic.domain.Customer;
 import com.adityasamant.learnings.customersbasic.domain.CustomerCollectionRepository;
 import com.adityasamant.learnings.customersbasic.domain.CustomerNotFoundException;
 import jakarta.validation.Valid;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/customers")
 @CrossOrigin
 public class CustomerController {
-
 
     Logger log = LoggerFactory.getLogger(CustomerController.class);
 
@@ -59,5 +57,4 @@ public class CustomerController {
         }
         repository.delete(id);
     }
-
 }

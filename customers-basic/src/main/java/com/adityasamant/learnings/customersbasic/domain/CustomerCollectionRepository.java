@@ -1,19 +1,17 @@
 package com.adityasamant.learnings.customersbasic.domain;
 
 import jakarta.annotation.PostConstruct;
-import org.springframework.stereotype.Repository;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public class CustomerCollectionRepository {
 
     private final List<Customer> customerList = new ArrayList<>();
 
-    public CustomerCollectionRepository() {
-    }
+    public CustomerCollectionRepository() {}
 
     public List<Customer> findAll() {
         return customerList;
@@ -45,7 +43,4 @@ public class CustomerCollectionRepository {
         customerList.add(c2);
         customerList.add(c3);
     }
-
-
-
 }

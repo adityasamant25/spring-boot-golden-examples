@@ -1,12 +1,10 @@
 package com.adityasamant.learnings.customersbasic.domain;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Optional;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class CustomerCollectionRepositoryTest {
 
@@ -18,7 +16,6 @@ class CustomerCollectionRepositoryTest {
         // Given : A customer
         customer = new Customer(1, "John", "Doe", "Australia");
     }
-
 
     @Test
     void saveAndFindAll() {
@@ -37,7 +34,6 @@ class CustomerCollectionRepositoryTest {
         // Then
         assertEquals(Optional.of(customer), repository.findById(1));
     }
-
 
     @Test
     void checkInvalidCustomer() {
