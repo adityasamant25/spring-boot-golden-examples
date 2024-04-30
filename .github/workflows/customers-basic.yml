@@ -16,7 +16,7 @@ jobs:
       DOCKER_IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/springboot-customers-basic
     defaults:
       run:
-        working-directory: ${{ env.working-dir }}
+        working-directory: ${{ env.working-directory }}
     steps:
       - uses: actions/checkout@v4
 
