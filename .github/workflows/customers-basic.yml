@@ -1,6 +1,7 @@
 name: Customers Basic
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - customers-basic/**
