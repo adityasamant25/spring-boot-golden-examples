@@ -16,7 +16,7 @@
     <properties>
         <java.version>21</java.version>
         <springdoc-openapi-starter-webmvc-ui-version>2.3.0</springdoc-openapi-starter-webmvc-ui-version>
-        <dockerImageName>adityasamantlearnings/spring-boot-${project.artifactId}</dockerImageName>
+        <dockerImageName>adityasamantlearnings/springboot-${project.artifactId}</dockerImageName>
     </properties>
     <dependencies>
         <dependency>
