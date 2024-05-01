@@ -13,6 +13,7 @@ jobs:
     uses: ./.github/workflows/common.yml
   build:
     name: Build
+    needs: common
     runs-on: ubuntu-latest
     env:
       working-directory: ./customers-basic
