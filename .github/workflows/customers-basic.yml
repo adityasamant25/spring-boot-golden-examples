@@ -9,6 +9,8 @@ on:
       - '**'
 
 jobs:
+  common:
+    uses: ./.github/workflows/common.yml
   build:
     name: Build
     runs-on: ubuntu-latest
