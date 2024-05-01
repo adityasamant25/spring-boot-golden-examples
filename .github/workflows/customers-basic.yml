@@ -33,7 +33,7 @@ jobs:
 
       - name: Build with Maven
         run: |
-          cd ../common && mvn clean install
+          cd ../common && mvn clean install && cd ../customers-basic
           ./mvnw -ntp verify
 
       - if: ${{ github.ref == 'refs/heads/main' }}
