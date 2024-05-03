@@ -15,12 +15,14 @@ accompanied by unit and integration tests. CRUD operations are demonstrated usin
 
 ## Submodules
 
-### Common
-This module holds the classes and objects that are common to other modules. e.g. Data Transfer Objects (DTOs)
+### Commons
+This module holds the classes and objects that are common to other modules. e.g. Data Transfer Objects (DTOs).  
+For details, please refer to the documentation of the [Commons module](common/README.md).
 
 ### Customers Basic
 This module is the most basic REST based microservice that can be created with Spring Boot. It uses the `spring-web` 
 dependency to provide REST APIs for CRUD operations on the `Customers` entity. It is accompanied by unit and 
 integration tests. Integration tests use the WebMvcTest framework. It also showcases custom exception handling in 
 Spring Boot. API documentation is auto-generated using the springdoc-openapi java library. It uses `spring-boot-actuator` 
-to expose the default metrics and health information.
+to expose the default metrics and health information.  
+For details, please refer to the documentation of the [Customers Basic module](customers-basic/README.md).
