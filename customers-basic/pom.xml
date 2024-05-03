@@ -13,13 +13,13 @@
     <name>customers-basic</name>
     <description>customers-basic</description>
     <properties>
-        <dockerImageName>${dockerhub.username}/springboot-${project.artifactId}:${version}</dockerImageName>
+        <dockerImageName>${dockerhub.username}/springboot-${project.artifactId}:${project.version}</dockerImageName>
     </properties>
     <dependencies>
         <dependency>
             <groupId>com.adityasamant.learnings</groupId>
             <artifactId>common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
