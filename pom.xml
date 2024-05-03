@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.adityasamant.learnings</groupId>
     <artifactId>spring-boot-golden-examples</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>spring-boot</name>
     <description>spring-boot</description>
@@ -29,6 +29,7 @@
     <modules>
         <module>common</module>
         <module>customers-basic</module>
+        <module>client-app</module>
     </modules>
 
     <build>

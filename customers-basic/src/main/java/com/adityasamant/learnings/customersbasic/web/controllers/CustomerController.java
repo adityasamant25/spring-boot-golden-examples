@@ -1,9 +1,9 @@
 package com.adityasamant.learnings.customersbasic.web.controllers;
 
+import com.adityasamant.learnings.common.domain.customers.CustomerDTO;
+import com.adityasamant.learnings.common.domain.customers.CustomerNotFoundException;
 import com.adityasamant.learnings.customersbasic.domain.CustomerCollectionRepository;
 import com.adityasamant.learnings.customersbasic.domain.CustomerMapper;
-import com.adityasamant.learnings.customersbasic.domain.CustomerNotFoundException;
-import domain.customers.CustomerDTO;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;

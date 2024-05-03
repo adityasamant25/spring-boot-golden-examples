@@ -8,26 +8,17 @@
         <version>0.0.2-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
-    <artifactId>customers-basic</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
-    <name>customers-basic</name>
-    <description>customers-basic</description>
+    <artifactId>client-app</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>client-app</name>
+    <description>client-app</description>
     <properties>
-        <dockerImageName>${dockerhub.username}/springboot-${project.artifactId}:${project.version}</dockerImageName>
+        <java.version>21</java.version>
     </properties>
     <dependencies>
         <dependency>
-            <groupId>com.adityasamant.learnings</groupId>
-            <artifactId>common</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
@@ -40,9 +31,20 @@
         </dependency>
 
         <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.adityasamant.learnings</groupId>
+            <artifactId>common</artifactId>
+            <version>0.0.2-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
@@ -58,18 +60,7 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
-                    <image>
-                        <name>${dockerImageName}</name>
-                        <builder>${docker.imagebuilder}</builder>
-                    </image>
                 </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>build-info</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>io.github.git-commit-id</groupId>

@@ -5,9 +5,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.adityasamant.learnings.common.domain.customers.CustomerNotFoundException;
 import com.adityasamant.learnings.customersbasic.domain.Customer;
 import com.adityasamant.learnings.customersbasic.domain.CustomerCollectionRepository;
-import com.adityasamant.learnings.customersbasic.domain.CustomerNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

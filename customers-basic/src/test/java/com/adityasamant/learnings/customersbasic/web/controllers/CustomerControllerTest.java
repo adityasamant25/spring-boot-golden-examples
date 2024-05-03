@@ -2,9 +2,9 @@ package com.adityasamant.learnings.customersbasic.web.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.adityasamant.learnings.common.domain.customers.CustomerDTO;
 import com.adityasamant.learnings.customersbasic.domain.Customer;
 import com.adityasamant.learnings.customersbasic.domain.CustomerCollectionRepository;
-import domain.customers.CustomerDTO;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
