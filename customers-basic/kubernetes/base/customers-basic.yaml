@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: springboot-customers-basic
+  name: springboot-customers-basic
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: springboot-customers-basic
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: springboot-customers-basic
+    spec:
+      containers:
+        - image: adityasamantlearnings/springboot-customers-basic:0.0.1
+          name: springboot-customers-basic
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: springboot-customers-basic
+  name: springboot-customers-basic
+spec:
+  type: NodePort
+  ports:
+    - port: 8081
+      protocol: TCP
+      targetPort: 8081
+  selector:
+    app: springboot-customers-basic
+

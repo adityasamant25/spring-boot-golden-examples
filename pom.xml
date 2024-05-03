@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.adityasamant.learnings</groupId>
     <artifactId>spring-boot-golden-examples</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <packaging>pom</packaging>
     <name>spring-boot</name>
     <description>spring-boot</description>
@@ -21,6 +21,9 @@
         <maven.compiler.release>${java.version}</maven.compiler.release>
         <springdoc-openapi-starter-webmvc-ui-version>2.3.0</springdoc-openapi-starter-webmvc-ui-version>
         <spotless.maven.plugin.version>2.43.0</spotless.maven.plugin.version>
+        <palantir.javaformat.version>2.35.0</palantir.javaformat.version>
+        <dockerhub.username>adityasamantlearnings</dockerhub.username>
+        <docker.imagebuilder>dashaun/builder:tiny</docker.imagebuilder>
     </properties>
 
     <modules>

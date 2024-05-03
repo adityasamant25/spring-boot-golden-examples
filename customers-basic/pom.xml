@@ -9,13 +9,11 @@
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
     <artifactId>customers-basic</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>customers-basic</name>
     <description>customers-basic</description>
     <properties>
-        <!--<java.version>21</java.version>-->
-        <!--<springdoc-openapi-starter-webmvc-ui-version>2.3.0</springdoc-openapi-starter-webmvc-ui-version>-->
-        <dockerImageName>adityasamantlearnings/springboot-${project.artifactId}</dockerImageName>
+        <dockerImageName>${dockerhub.username}/springboot-${project.artifactId}:${version}</dockerImageName>
     </properties>
     <dependencies>
         <dependency>
@@ -62,7 +60,7 @@
                     </excludes>
                     <image>
                         <name>${dockerImageName}</name>
-                        <builder>dashaun/builder:tiny</builder>
+                        <builder>${docker.imagebuilder}</builder>
                     </image>
                 </configuration>
                 <executions>
@@ -104,7 +102,7 @@
                         <importOrder />
                         <removeUnusedImports />
                         <palantirJavaFormat>
-                            <version>2.35.0</version>
+                            <version>${palantir.javaformat.version}</version>
                         </palantirJavaFormat>
                         <formatAnnotations />
                     </java>
