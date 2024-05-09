@@ -1,6 +1,6 @@
 package com.adityasamant.learnings.customersbasic.domain;
 
-import domain.customers.CustomerDTO;
+import com.adityasamant.learnings.common.domain.customers.CustomerDTO;
 
 public class CustomerMapper {
 

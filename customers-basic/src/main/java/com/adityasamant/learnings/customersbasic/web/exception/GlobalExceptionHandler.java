@@ -1,6 +1,6 @@
 package com.adityasamant.learnings.customersbasic.web.exception;
 
-import com.adityasamant.learnings.customersbasic.domain.CustomerNotFoundException;
+import com.adityasamant.learnings.common.domain.customers.CustomerNotFoundException;
 import java.net.URI;
 import java.time.Instant;
 import org.springframework.http.HttpStatus;

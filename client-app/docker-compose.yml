@@ -1,0 +1,23 @@
+version: '3'
+services:
+  customers:
+    container_name: customers-basic
+    image: adityasamantlearnings/springboot-customers-basic:0.0.2
+    ports:
+      - "8081:8081"
+    networks:
+      - spring-network
+
+  rest-client:
+    container_name: client-app
+    image: adityasamantlearnings/springboot-client-app:0.0.1
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring-network
+
+networks:
+  spring-network:
+    driver: bridge

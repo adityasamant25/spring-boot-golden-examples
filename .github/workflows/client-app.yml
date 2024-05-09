@@ -1,10 +1,10 @@
-name: Customers Basic
+name: Client App
 
 on:
   workflow_dispatch:
   push:
     paths:
-      - customers-basic/**
+      - client-app/**
     branches:
       - '**'
 
@@ -13,8 +13,8 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     env:
-      working-directory: ./customers-basic
-      DOCKER_IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/springboot-customers-basic
+      working-directory: ./client-app
+      DOCKER_IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/springboot-client-app
     defaults:
       run:
         working-directory: ${{ env.working-directory }}
@@ -30,7 +30,7 @@ jobs:
 
       - name: Build with Maven
         run: |
-          cd .. && mvn clean install && cd common && mvn clean install && cd ../customers-basic
+          cd .. && mvn clean install && cd common && mvn clean install && cd ../client-app
           ./mvnw -ntp verify
 
       - name: Extract Maven project version

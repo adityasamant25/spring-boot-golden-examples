@@ -1,4 +1,4 @@
-package com.adityasamant.learnings.customersbasic.domain;
+package com.adityasamant.learnings.common.domain.customers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

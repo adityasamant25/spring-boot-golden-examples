@@ -1,4 +1,4 @@
-package domain.customers;
+package com.adityasamant.learnings.common.domain.customers;
 
 import jakarta.validation.constraints.NotEmpty;
 
