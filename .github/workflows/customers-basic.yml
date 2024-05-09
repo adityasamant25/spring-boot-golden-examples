@@ -9,8 +9,6 @@ on:
       - '**'
 
 jobs:
-  common:
-    uses: ./.github/workflows/common.yml
   build:
     name: Build
     needs: common
@@ -33,7 +31,7 @@ jobs:
 
       - name: Build with Maven
         run: |
-          cd ../common && mvn clean install && cd ../customers-basic
+          cd .. && mvn clean install && cd common && mvn clean install && cd ../customers-basic
           ./mvnw -ntp verify
 
       - name: Extract Maven project version
