@@ -236,17 +236,12 @@ public class CustomersBasicClientControllerTest {
 
     @Test
     void shouldFailToDeleteANonExistingCustomer() throws Exception {
-        // given
-        CustomerDTO candidateToDelete = new CustomerDTO(97, "NewFirstName", "NewLastName", "Spain");
 
         // when
         doThrow(CustomerNotFoundException.class).when(client).deleteCustomer(97);
 
         // then
-        mvc.perform(delete("/api/customers/97")
-                        .contentType("application/json")
-                        .content(mapper.writeValueAsString(candidateToDelete)))
-                .andExpect(status().isNotFound());
+        mvc.perform(delete("/api/customers/97")).andExpect(status().isNotFound());
 
         verify(customersBasicClient, times(1)).deleteCustomer(97);
     }

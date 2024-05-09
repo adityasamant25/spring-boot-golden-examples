@@ -2,6 +2,7 @@ package com.adityasamant.learnings.clientapp.web.exception;
 
 import com.adityasamant.learnings.common.domain.customers.CustomerNotFoundException;
 import com.adityasamant.learnings.common.domain.customers.CustomerServiceAuthorizationException;
+import com.adityasamant.learnings.common.domain.customers.CustomerServiceBadRequestException;
 import com.adityasamant.learnings.common.domain.customers.CustomerServiceConnectionException;
 import java.net.URI;
 import java.time.Instant;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @RestControllerAdvice
 class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     private static final URI NOT_FOUND_TYPE = URI.create("https://api.client-app.com/errors/not-found");
+    private static final URI BAD_REQUEST_TYPE = URI.create("https://api.client-app.com/errors/bad-request");
     private static final URI ISE_FOUND_TYPE = URI.create("https://api.client-app.com/errors/server-error");
     private static final URI SECURITY_TYPE = URI.create("https://api.client-app.com/errors/security-error");
     private static final URI CONNECTIVITY_TYPE = URI.create("https://api.client-app.com/errors/connectivity-error");
@@ -58,6 +60,17 @@ class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, e.getMessage());
         problemDetail.setTitle("Customer Not Found");
         problemDetail.setType(NOT_FOUND_TYPE);
+        problemDetail.setProperty("service", SERVICE_NAME);
+        problemDetail.setProperty("error_category", "Generic");
+        problemDetail.setProperty("timestamp", Instant.now());
+        return problemDetail;
+    }
+
+    @ExceptionHandler(CustomerServiceBadRequestException.class)
+    ProblemDetail handleCustomerServiceBadRequestException(CustomerServiceBadRequestException e) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, e.getMessage());
+        problemDetail.setTitle("Bad Request");
+        problemDetail.setType(BAD_REQUEST_TYPE);
         problemDetail.setProperty("service", SERVICE_NAME);
         problemDetail.setProperty("error_category", "Generic");
         problemDetail.setProperty("timestamp", Instant.now());

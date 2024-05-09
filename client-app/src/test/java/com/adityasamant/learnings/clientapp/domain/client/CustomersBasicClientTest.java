@@ -5,10 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.*;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.*;
 
-import com.adityasamant.learnings.common.domain.customers.CustomerDTO;
-import com.adityasamant.learnings.common.domain.customers.CustomerNotFoundException;
-import com.adityasamant.learnings.common.domain.customers.CustomerServiceAuthorizationException;
-import com.adityasamant.learnings.common.domain.customers.CustomerServiceConnectionException;
+import com.adityasamant.learnings.common.domain.customers.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.SocketException;
@@ -208,7 +205,8 @@ public class CustomersBasicClientTest {
                 .andRespond(withStatus(HttpStatus.BAD_REQUEST));
 
         // then
-        customersBasicClient.createCustomer(newCustomer);
+        assertThrows(CustomerServiceBadRequestException.class, () -> customersBasicClient.createCustomer(newCustomer));
+        // customersBasicClient.createCustomer(newCustomer);
 
         server.verify();
     }
@@ -252,7 +250,9 @@ public class CustomersBasicClientTest {
                 .andRespond(withStatus(HttpStatus.BAD_REQUEST));
 
         // then
-        customersBasicClient.updateCustomer(newCustomer, 1);
+        assertThrows(
+                CustomerServiceBadRequestException.class, () -> customersBasicClient.updateCustomer(newCustomer, 1));
+        // customersBasicClient.updateCustomer(newCustomer, 1);
 
         server.verify();
     }
@@ -274,7 +274,8 @@ public class CustomersBasicClientTest {
                 .andRespond(withStatus(HttpStatus.NOT_FOUND));
 
         // then
-        customersBasicClient.updateCustomer(newCustomer, 98);
+        assertThrows(CustomerNotFoundException.class, () -> customersBasicClient.updateCustomer(newCustomer, 98));
+        // customersBasicClient.updateCustomer(newCustomer, 98);
 
         server.verify();
     }
