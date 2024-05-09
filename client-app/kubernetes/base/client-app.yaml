@@ -16,7 +16,7 @@ spec:
         app: springboot-customers-basic
     spec:
       containers:
-        - image: adityasamantlearnings/springboot-customers-basic:0.0.2
+        - image: adityasamantlearnings/springboot-customers-basic:0.0.3
           name: springboot-customers-basic
 
 ---
@@ -56,7 +56,7 @@ spec:
         app: springboot-client-app
     spec:
       containers:
-        - image: adityasamantlearnings/springboot-client-app:0.0.1
+        - image: adityasamantlearnings/springboot-client-app:0.0.2
           name: client-app
           env:
             - name: CUSTOMERS_BASIC_SERVICE_URL

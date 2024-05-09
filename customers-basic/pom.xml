@@ -9,7 +9,7 @@
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
     <artifactId>customers-basic</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
     <name>customers-basic</name>
     <description>customers-basic</description>
     <properties>
