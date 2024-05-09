@@ -1,0 +1,58 @@
+name: Client App
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - client-app/**
+    branches:
+      - '**'
+
+jobs:
+  common:
+    uses: ./.github/workflows/common.yml
+  build:
+    name: Build
+    needs: common
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./client-app
+      DOCKER_IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/springboot-client-app
+    defaults:
+      run:
+        working-directory: ${{ env.working-directory }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Build with Maven
+        run: |
+          cd ../common && mvn clean install && cd ../client-app
+          ./mvnw -ntp verify
+
+      - name: Extract Maven project version
+        run: echo ::set-output name=version::$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
+        id: project
+
+      - name: Show extracted Maven project version
+        run: echo ${{ steps.project.outputs.version }}
+
+      - if: ${{ github.ref == 'refs/heads/main' }}
+        name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - if: ${{ github.ref == 'refs/heads/main' }}
+        name: Build and Publish Docker Image
+        run: |
+          ./mvnw spring-boot:build-image -DskipTests
+          echo "Pushing the image $DOCKER_IMAGE_NAME to Docker Hub..."
+          docker push $DOCKER_IMAGE_NAME:${{ steps.project.outputs.version }}

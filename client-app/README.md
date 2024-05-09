@@ -1,16 +1,14 @@
-# Customers Basic
+# Client App
 
-This module is the most basic REST based microservice that can be created with Spring Boot. 
+This module is a representation of a client microservice created with Spring Boot. It uses the new `RestClient` introduced 
+in Spring Framework 6.x
 
 ## Features
-* Based on `spring-web` library
-* Accompanied by stable unit and integration tests. Integration tests use the `WebMvcTest` framework
-* Showcases custom exception handling in Spring Boot 
+* Based on `spring-web` library and `RestClient` introduced in Spring Framework 6.x
+* Accompanied by stable unit and integration tests. Integration tests use the `WebMvcTest` and `RestClientTest` frameworks
+* Showcases Junit tests for client application by mocking server invocations
 * API documentation is auto-generated using the springdoc-openapi java library 
 * Uses `spring-boot-actuator` to expose the default metrics and health information.
-
-## What's new in version 0.0.2
-* Aligned as per the package changes in the `common` module
 
 ## Quick Start
 
@@ -22,18 +20,23 @@ This module is the most basic REST based microservice that can be created with S
 git clone https://github.com/adityasamant25/spring-boot-golden-examples.git
 ```
 ```
-cd spring-boot-golden-examples/customers-basic
+cd spring-boot-golden-examples
 ```
 ```
 ./mvnw clean install
 ```
 
-#### Run
+#### Run the server application
 ```
-java -jar target/customers-basic-0.0.1-SNAPSHOT.jar
+java -jar customers-basic/target/customers-basic-0.0.2-SNAPSHOT.jar
 ```
 
-#### Access from a terminal
+#### From a new terminal, run the client application
+```
+java -jar client-app/target/client-app-0.0.1-SNAPSHOT.jar
+```
+
+#### Access from a new terminal
 ```
 curl localhost:8081/api/customers
 ```
@@ -44,20 +47,24 @@ The expected output is:
 ```
 
 #### Access from a browser
-http://localhost:8081/api/customers
+http://localhost:8082/api/customers
 
 #### Cleanup
-Terminate the application using Ctrl+C on the terminal running the process.
+Terminate the application using Ctrl+C on the terminal running the client and server processes.
 
 
 ### Run on Docker
 **Prerequisite:** A running Docker Engine. Docker Desktop is preferred for local development.
-#### Build the image
+
+#### Build the server image
+See appropriate instructions in the README.md for the customers-basic application.
+
+#### Build the client image
 ```
 git clone https://github.com/adityasamant25/spring-boot-golden-examples.git
 ```
 ```
-cd spring-boot-golden-examples/customers-basic
+cd spring-boot-golden-examples/client-app
 ```
 ```
 ./mvnw clean install
@@ -69,7 +76,7 @@ Please check the following before running the next command:
 <dockerhub.username>adityasamantlearnings</dockerhub.username>
 ```
 
-* In case you are running on a machine with x86 CPU architecture, comment out the `image` section in `customers-basic/pom.xml`
+* In case you are running on a machine with x86 CPU architecture, comment out the `image` section in `client-app/pom.xml`
 ```xml
 <plugin>
     <groupId>org.springframework.boot</groupId>
@@ -101,19 +108,19 @@ Please check the following before running the next command:
 ```
 
 This will create a Docker image as per the naming convention defined:  
-e.g. `adityasamantlearnings/springboot-customers-basic:0.0.1`
+e.g. `adityasamantlearnings/springboot-client-app:0.0.1`
 
-#### Run the application
+#### Run the application using docker-compose
 > [!NOTE] 
-> The below command will run the application with the image residing on the `adityasamantlearnings/springboot-customers-basic` repository which is built for arm64 architecture.
-Replace `adityasamantlearnings/springboot-customers-basic:0.0.1` with the appropriate name and tag of the image you wish to run.
+> The below command will run the application with the images residing on the `adityasamantlearnings/springboot-client-app` and `adityasamantlearnings/springboot-customers-basic` repositories which are built for arm64 architecture.
+Replace the image paths with the appropriate name and tag of the images you wish to run in the docker-compose.yml file.
 ```
-docker run -d --name customers-basic -p 8081:8081 adityasamantlearnings/springboot-customers-basic:0.0.1
+docker-compose up
 ```
 
 #### Access from a terminal
 ```
-curl localhost:8081/api/customers
+curl localhost:8082/api/customers
 ```
 
 The expected output is:
@@ -122,19 +129,20 @@ The expected output is:
 ```
 
 #### Access from a browser
-http://localhost:8081/api/customers
+http://localhost:8082/api/customers
 
 #### Push the image to DockerHub
 Example:
 ```
-docker image push adityasamantlearnings/springboot-customers-basic:0.0.1
+docker image push adityasamantlearnings/springboot-client-app:0.0.1
 ```
 
 #### Cleanup
 ```
-docker stop customers-basic
-docker rm customers-basic
-docker rmi adityasamantlearnings/springboot-customers-basic:0.0.1
+Terminate the running docker-compose command
+docker-compose stop
+docker-compose rm
+docker rmi adityasamantlearnings/springboot-client-app:0.0.1
 ```
 
 ### Run on Kubernetes
@@ -142,7 +150,7 @@ docker rmi adityasamantlearnings/springboot-customers-basic:0.0.1
 [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl) should be installed.
 
 > [!NOTE]
-> The below command will run the application with the image residing on the `adityasamantlearnings/springboot-customers-basic` repository which is built for arm64 architecture.
+> The below command will run the application with the images residing on the `adityasamantlearnings/springboot-client-app` and `adityasamantlearnings/springboot-customers-basic` repositories which is built for arm64 architecture.
 > If you wish to build your own image, follow the steps mentioned in the `Run on Docker` section.
 
 #### Apply the manifest using Kustomize
@@ -150,7 +158,7 @@ docker rmi adityasamantlearnings/springboot-customers-basic:0.0.1
 git clone https://github.com/adityasamant25/spring-boot-golden-examples.git
 ```
 ```
-cd spring-boot-golden-examples/customers-basic/kubernetes/overlay/dev
+cd spring-boot-golden-examples/client-app/kubernetes/overlay/dev
 ```
 ```
 kubectl apply -k .
@@ -158,7 +166,7 @@ kubectl apply -k .
 
 #### Get the URL of the minikube service
 ```
-minikube service springboot-customers-basic --url
+minikube service springboot-client-app --url
 ```
 
 #### Access using curl from a new terminal
@@ -171,8 +179,7 @@ http://<minikube service url>/api/customers
 
 #### Cleanup
 ```
-kubectl delete deployment springboot-customers-basic
-kubectl delete service springboot-customers-basic
+kubectl delete -k .
 ```
 
 Terminate the minikube tunnel using Ctrl+C on the terminal running it.

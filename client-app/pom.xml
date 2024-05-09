@@ -13,7 +13,7 @@
     <name>client-app</name>
     <description>client-app</description>
     <properties>
-        <java.version>21</java.version>
+        <dockerImageName>${dockerhub.username}/springboot-${project.artifactId}:${project.version}</dockerImageName>
     </properties>
     <dependencies>
         <dependency>
@@ -60,6 +60,10 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                    <image>
+                        <name>${dockerImageName}</name>
+                        <builder>${docker.imagebuilder}</builder>
+                    </image>
                 </configuration>
             </plugin>
             <plugin>

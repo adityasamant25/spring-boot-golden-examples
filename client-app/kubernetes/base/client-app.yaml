@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: springboot-customers-basic
+  name: springboot-customers-basic
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: springboot-customers-basic
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: springboot-customers-basic
+    spec:
+      containers:
+        - image: adityasamantlearnings/springboot-customers-basic:0.0.2-SNAPSHOT
+          name: springboot-customers-basic
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: springboot-customers-basic
+  name: springboot-customers-basic
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8081
+      protocol: TCP
+      targetPort: 8081
+  selector:
+    app: springboot-customers-basic
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: springboot-client-app
+  name: springboot-client-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: springboot-client-app
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: springboot-client-app
+    spec:
+      containers:
+        - image: adityasamantlearnings/springboot-client-app:0.0.1-SNAPSHOT
+          name: client-app
+          env:
+            - name: CUSTOMERS_BASIC_SERVICE_URL
+              value: "http://springboot-customers-basic:8081"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: springboot-client-app
+  name: springboot-client-app
+spec:
+  ports:
+    - port: 8082
+      protocol: TCP
+      targetPort: 8082
+  selector:
+    app: springboot-client-app
+  type: NodePort
+
