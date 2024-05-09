@@ -28,12 +28,12 @@ cd spring-boot-golden-examples
 
 #### Run the server application
 ```
-java -jar customers-basic/target/customers-basic-0.0.2-SNAPSHOT.jar
+java -jar customers-basic/target/customers-basic-0.0.2.jar
 ```
 
 #### From a new terminal, run the client application
 ```
-java -jar client-app/target/client-app-0.0.1-SNAPSHOT.jar
+java -jar client-app/target/client-app-0.0.1.jar
 ```
 
 #### Access from a new terminal

@@ -5,11 +5,11 @@
     <parent>
         <groupId>com.adityasamant.learnings</groupId>
         <artifactId>spring-boot-golden-examples</artifactId>
-        <version>0.0.2-SNAPSHOT</version>
+        <version>0.0.2</version>
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
     <artifactId>client-app</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>client-app</name>
     <description>client-app</description>
     <properties>
@@ -43,7 +43,7 @@
         <dependency>
             <groupId>com.adityasamant.learnings</groupId>
             <artifactId>common</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
+            <version>0.0.2</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

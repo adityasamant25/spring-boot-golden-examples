@@ -30,7 +30,7 @@ cd spring-boot-golden-examples/customers-basic
 
 #### Run
 ```
-java -jar target/customers-basic-0.0.1-SNAPSHOT.jar
+java -jar target/customers-basic-0.0.2.jar
 ```
 
 #### Access from a terminal
@@ -101,14 +101,14 @@ Please check the following before running the next command:
 ```
 
 This will create a Docker image as per the naming convention defined:  
-e.g. `adityasamantlearnings/springboot-customers-basic:0.0.1`
+e.g. `adityasamantlearnings/springboot-customers-basic:0.0.2`
 
 #### Run the application
 > [!NOTE] 
 > The below command will run the application with the image residing on the `adityasamantlearnings/springboot-customers-basic` repository which is built for arm64 architecture.
-Replace `adityasamantlearnings/springboot-customers-basic:0.0.1` with the appropriate name and tag of the image you wish to run.
+Replace `adityasamantlearnings/springboot-customers-basic:0.0.2` with the appropriate name and tag of the image you wish to run.
 ```
-docker run -d --name customers-basic -p 8081:8081 adityasamantlearnings/springboot-customers-basic:0.0.1
+docker run -d --name customers-basic -p 8081:8081 adityasamantlearnings/springboot-customers-basic:0.0.2
 ```
 
 #### Access from a terminal
@@ -127,14 +127,14 @@ http://localhost:8081/api/customers
 #### Push the image to DockerHub
 Example:
 ```
-docker image push adityasamantlearnings/springboot-customers-basic:0.0.1
+docker image push adityasamantlearnings/springboot-customers-basic:0.0.2
 ```
 
 #### Cleanup
 ```
 docker stop customers-basic
 docker rm customers-basic
-docker rmi adityasamantlearnings/springboot-customers-basic:0.0.1
+docker rmi adityasamantlearnings/springboot-customers-basic:0.0.2
 ```
 
 ### Run on Kubernetes
