@@ -33,12 +33,22 @@ jobs:
           cd .. && mvn clean install && cd common && mvn clean install && cd ../client-app
           ./mvnw -ntp verify
 
-      - name: Extract Maven project version
+      - if: ${{ github.ref == 'refs/heads/main' }}
+        name: Extract Maven project version
         run: echo ::set-output name=version::$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
         id: project
 
-      - name: Show extracted Maven project version
+      - if: ${{ github.ref == 'refs/heads/main' }}
+        name: Show extracted Maven project version
         run: echo ${{ steps.project.outputs.version }}
+
+      - if: ${{ github.ref == 'refs/heads/main' }}
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - if: ${{ github.ref == 'refs/heads/main' }}
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
       - if: ${{ github.ref == 'refs/heads/main' }}
         name: Login to Docker Hub
@@ -50,6 +60,6 @@ jobs:
       - if: ${{ github.ref == 'refs/heads/main' }}
         name: Build and Publish Docker Image
         run: |
-          ./mvnw spring-boot:build-image -DskipTests
-          echo "Pushing the image $DOCKER_IMAGE_NAME to Docker Hub..."
-          docker push $DOCKER_IMAGE_NAME:${{ steps.project.outputs.version }}
+          ./mvnw clean install
+          echo "Build and push the multi-architecture image $DOCKER_IMAGE_NAME to Docker Hub..."
+          docker buildx build --platform linux/amd64,linux/arm64 -t $DOCKER_IMAGE_NAME:${{ steps.project.outputs.version }} --push .

@@ -10,6 +10,10 @@ in Spring Framework 6.x
 * API documentation is auto-generated using the springdoc-openapi java library 
 * Uses `spring-boot-actuator` to expose the default metrics and health information.
 
+## What's new
+### v0.0.2
+* Enabled multi-architecture support for the Docker image
+
 ## Quick Start
 
 ### Run on Local
@@ -33,7 +37,7 @@ java -jar customers-basic/target/customers-basic-0.0.2.jar
 
 #### From a new terminal, run the client application
 ```
-java -jar client-app/target/client-app-0.0.1.jar
+java -jar client-app/target/client-app-0.0.2.jar
 ```
 
 #### Access from a new terminal
@@ -59,7 +63,7 @@ Terminate the application using Ctrl+C on the terminal running the client and se
 #### Build the server image
 See appropriate instructions in the README.md for the customers-basic application.
 
-#### Build the client image
+#### Build the client image (using buildpack)
 ```
 git clone https://github.com/adityasamant25/spring-boot-golden-examples.git
 ```
@@ -108,11 +112,29 @@ Please check the following before running the next command:
 ```
 
 This will create a Docker image as per the naming convention defined:  
-e.g. `adityasamantlearnings/springboot-client-app:0.0.1`
+e.g. `adityasamantlearnings/springboot-client-app:0.0.2`
+
+#### Build the image (using Docker file)
+```
+git clone https://github.com/adityasamant25/spring-boot-golden-examples.git
+```
+```
+cd spring-boot-golden-examples/client-app
+```
+```
+./mvnw clean install
+```
+
+```
+docker build . -t adityasamantlearnings/springboot-client-app:0.0.2
+```
+
+This will create a Docker image as per the tag defined. In case you wish to push the image to your own DockerHub repository,
+please tag it appropriately.
 
 #### Run the application using docker-compose
 > [!NOTE] 
-> The below command will run the application with the images residing on the `adityasamantlearnings/springboot-client-app` and `adityasamantlearnings/springboot-customers-basic` repositories which are built for arm64 architecture.
+> The below command will run the application with the images residing on the `adityasamantlearnings/springboot-client-app` and `adityasamantlearnings/springboot-customers-basic` repositories which are multi-platform compliant.
 Replace the image paths with the appropriate name and tag of the images you wish to run in the docker-compose.yml file.
 ```
 docker-compose up
@@ -134,7 +156,13 @@ http://localhost:8082/api/customers
 #### Push the image to DockerHub
 Example:
 ```
-docker image push adityasamantlearnings/springboot-client-app:0.0.1
+docker image push adityasamantlearnings/springboot-client-app:0.0.2
+```
+
+#### Build and Push a multi-architecture supported image to DockerHub
+Example:
+```
+docker buildx build --platform linux/amd64,linux/arm64 -t adityasamantlearnings/springboot-client-app:0.0.2 --push .
 ```
 
 #### Cleanup
@@ -142,7 +170,7 @@ docker image push adityasamantlearnings/springboot-client-app:0.0.1
 Terminate the running docker-compose command
 docker-compose stop
 docker-compose rm
-docker rmi adityasamantlearnings/springboot-client-app:0.0.1
+docker rmi adityasamantlearnings/springboot-client-app:0.0.2
 ```
 
 ### Run on Kubernetes

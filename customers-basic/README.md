@@ -9,7 +9,11 @@ This module is the most basic REST based microservice that can be created with S
 * API documentation is auto-generated using the springdoc-openapi java library 
 * Uses `spring-boot-actuator` to expose the default metrics and health information.
 
-## What's new in version 0.0.2
+## What's new
+### v0.0.3
+* Enabled multi-architecture support for the Docker image
+
+### v0.0.2
 * Aligned as per the package changes in the `common` module
 
 ## Quick Start
@@ -30,7 +34,7 @@ cd spring-boot-golden-examples/customers-basic
 
 #### Run
 ```
-java -jar target/customers-basic-0.0.2.jar
+java -jar target/customers-basic-0.0.3.jar
 ```
 
 #### Access from a terminal
@@ -52,7 +56,7 @@ Terminate the application using Ctrl+C on the terminal running the process.
 
 ### Run on Docker
 **Prerequisite:** A running Docker Engine. Docker Desktop is preferred for local development.
-#### Build the image
+#### Build the image (using buildpack)
 ```
 git clone https://github.com/adityasamant25/spring-boot-golden-examples.git
 ```
@@ -101,14 +105,32 @@ Please check the following before running the next command:
 ```
 
 This will create a Docker image as per the naming convention defined:  
-e.g. `adityasamantlearnings/springboot-customers-basic:0.0.2`
+e.g. `adityasamantlearnings/springboot-customers-basic:0.0.3`
+
+#### Build the image (using Docker file)
+```
+git clone https://github.com/adityasamant25/spring-boot-golden-examples.git
+```
+```
+cd spring-boot-golden-examples/customers-basic
+```
+```
+./mvnw clean install
+```
+
+```
+docker build . -t adityasamantlearnings/springboot-customers-basic:0.0.3
+```
+
+This will create a Docker image as per the tag defined. In case you wish to push the image to your own DockerHub repository, 
+please tag it appropriately.
 
 #### Run the application
 > [!NOTE] 
-> The below command will run the application with the image residing on the `adityasamantlearnings/springboot-customers-basic` repository which is built for arm64 architecture.
-Replace `adityasamantlearnings/springboot-customers-basic:0.0.2` with the appropriate name and tag of the image you wish to run.
+> The below command will run the application with the image residing on the `adityasamantlearnings/springboot-customers-basic` repository which supports both x86 and arm64 CPU architectures.
+Replace `adityasamantlearnings/springboot-customers-basic:0.0.3` with the appropriate name and tag of the image you wish to run.
 ```
-docker run -d --name customers-basic -p 8081:8081 adityasamantlearnings/springboot-customers-basic:0.0.2
+docker run -d --name customers-basic -p 8081:8081 adityasamantlearnings/springboot-customers-basic:0.0.3
 ```
 
 #### Access from a terminal
@@ -127,14 +149,21 @@ http://localhost:8081/api/customers
 #### Push the image to DockerHub
 Example:
 ```
-docker image push adityasamantlearnings/springboot-customers-basic:0.0.2
+docker image push adityasamantlearnings/springboot-customers-basic:0.0.3
 ```
+
+#### Build and Push a multi-architecture supported image to DockerHub
+Example:
+```
+docker buildx build --platform linux/amd64,linux/arm64 -t adityasamantlearnings/springboot-customers-basic:0.0.3 --push .
+```
+
 
 #### Cleanup
 ```
 docker stop customers-basic
 docker rm customers-basic
-docker rmi adityasamantlearnings/springboot-customers-basic:0.0.2
+docker rmi adityasamantlearnings/springboot-customers-basic:0.0.3
 ```
 
 ### Run on Kubernetes
@@ -142,7 +171,7 @@ docker rmi adityasamantlearnings/springboot-customers-basic:0.0.2
 [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl) should be installed.
 
 > [!NOTE]
-> The below command will run the application with the image residing on the `adityasamantlearnings/springboot-customers-basic` repository which is built for arm64 architecture.
+> The below command will run the application with the image residing on the `adityasamantlearnings/springboot-customers-basic` repository which supports both x86 and arm64 architectures.
 > If you wish to build your own image, follow the steps mentioned in the `Run on Docker` section.
 
 #### Apply the manifest using Kustomize
