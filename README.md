@@ -27,3 +27,9 @@ integration tests. Integration tests use the WebMvcTest framework. It also showc
 Spring Boot. API documentation is auto-generated using the springdoc-openapi java library. It uses `spring-boot-actuator` 
 to expose the default metrics and health information.  
 For details, please refer to the documentation of the [Customers Basic module](customers-basic/README.md).
+
+### Client App
+
+This module is a representation of a client microservice created with Spring Boot. It uses the new `RestClient` introduced
+in Spring Framework 6.x to invoke other microservice APIs over REST. It is accompanied by stable unit and integration tests. Integration tests use the `WebMvcTest` and `RestClientTest` frameworks.
+For details, please refer to the documentation of the [Client App module](client-app/README.md).
