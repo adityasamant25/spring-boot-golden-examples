@@ -9,6 +9,7 @@ accompanied by unit and integration tests. CRUD operations are demonstrated usin
 * The project is based on the latest LTS release of Java (21) and Spring Boot 3.2.x
 * Each module is containerized using Docker and deployable on Kubernetes
 * Docker images are built using the `spring-boot-maven-plugin`
+* Docker images are multi-architecture (x86, arm64) compliant
 * The project's CI is managed using GitHub Actions
 * The project uses the `spotless-maven-plugin` for code formatting
 
