@@ -9,7 +9,7 @@
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
     <artifactId>client-app</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.2-exception</version>
     <name>client-app</name>
     <description>client-app</description>
     <properties>

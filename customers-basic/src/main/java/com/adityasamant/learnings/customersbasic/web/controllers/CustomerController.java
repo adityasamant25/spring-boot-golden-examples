@@ -2,11 +2,11 @@ package com.adityasamant.learnings.customersbasic.web.controllers;
 
 import com.adityasamant.learnings.common.domain.customers.CustomerDTO;
 import com.adityasamant.learnings.common.domain.customers.CustomerNotFoundException;
+import com.adityasamant.learnings.common.domain.customers.CustomerServiceInsufficientStorageException;
 import com.adityasamant.learnings.customersbasic.domain.CustomerCollectionRepository;
 import com.adityasamant.learnings.customersbasic.domain.CustomerMapper;
 import jakarta.validation.Valid;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -28,7 +28,7 @@ public class CustomerController {
     @GetMapping("")
     public List<CustomerDTO> findAll(@RequestHeader(value = "user", required = false) String user) {
         log.info("findAll is called with user header: {}", user);
-        return repository.findAll().stream().map(CustomerMapper::toCustomerDTO).collect(Collectors.toList());
+        throw new CustomerServiceInsufficientStorageException("Request failed due to insufficient storage");
     }
 
     @GetMapping("/{id}")

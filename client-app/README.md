@@ -11,6 +11,10 @@ in Spring Framework 6.x
 * Uses `spring-boot-actuator` to expose the default metrics and health information.
 
 ## What's new
+### v0.0.2-exception
+This is a temporary version that is created to simulate an exception in the application.  
+The changes will not be merged with the main branch.
+
 ### v0.0.2
 * Enabled multi-architecture support for the Docker image
 

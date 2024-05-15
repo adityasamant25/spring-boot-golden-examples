@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.adityasamant.learnings.common.domain.customers.CustomerNotFoundException;
+import com.adityasamant.learnings.common.domain.customers.CustomerServiceInsufficientStorageException;
 import com.adityasamant.learnings.customersbasic.domain.Customer;
 import com.adityasamant.learnings.customersbasic.domain.CustomerCollectionRepository;
 import java.util.ArrayList;
@@ -42,33 +43,37 @@ class CustomerControllerIntegrationTest {
 
     @Test
     void findAll() throws Exception {
-        String jsonResponse =
-                """
-                [
-                    {
-                        "id":1,
-                        "firstName":"John",
-                        "lastName":"Doe",
-                        "country":"Australia"
-                    },
-                    {
-                        "id":2,
-                        "firstName":"Alice",
-                        "lastName":"Smith",
-                        "country":"USA"
-                    },
-                    {
-                        "id":3,
-                        "firstName":"Bob",
-                        "lastName":"Stevens",
-                        "country":"England"
-                    }
-                ]
-                """;
-        when(customerCollectionRepository.findAll()).thenReturn(customers);
-        mvc.perform(get("/api/customers"))
-                .andExpect(status().isOk())
-                .andExpect(content().json(jsonResponse));
+        /*        String jsonResponse =
+        """
+        [
+            {
+                "id":1,
+                "firstName":"John",
+                "lastName":"Doe",
+                "country":"Australia"
+            },
+            {
+                "id":2,
+                "firstName":"Alice",
+                "lastName":"Smith",
+                "country":"USA"
+            },
+            {
+                "id":3,
+                "firstName":"Bob",
+                "lastName":"Stevens",
+                "country":"England"
+            }
+        ]
+        """;*/
+        // when(customerCollectionRepository.findAll()).thenReturn(customers);
+        when(customerCollectionRepository.findById(999)).thenThrow(CustomerServiceInsufficientStorageException.class);
+
+        mvc.perform(get("/api/customers")).andExpect(status().isInsufficientStorage());
+
+        /*        mvc.perform(get("/api/customers"))
+        .andExpect(status().isOk())
+        .andExpect(content().json(jsonResponse));*/
     }
 
     @Test

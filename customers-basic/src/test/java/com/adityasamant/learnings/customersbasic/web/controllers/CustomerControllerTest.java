@@ -1,11 +1,13 @@
 package com.adityasamant.learnings.customersbasic.web.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.adityasamant.learnings.common.domain.customers.CustomerDTO;
+import com.adityasamant.learnings.common.domain.customers.CustomerNotFoundException;
+import com.adityasamant.learnings.common.domain.customers.CustomerServiceInsufficientStorageException;
 import com.adityasamant.learnings.customersbasic.domain.Customer;
 import com.adityasamant.learnings.customersbasic.domain.CustomerCollectionRepository;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,20 +27,17 @@ class CustomerControllerTest {
 
     @Test
     void findAllWithBlankUserHeader() {
-        List<CustomerDTO> customers = controller.findAll(""); // Act
-        assertEquals(3, customers.size()); // Assert
+        assertThrows(CustomerServiceInsufficientStorageException.class, () -> controller.findAll(""));
     }
 
     @Test
     void findAllWithNullUserHeader() {
-        List<CustomerDTO> customers = controller.findAll(null); // Act
-        assertEquals(3, customers.size()); // Assert
+        assertThrows(CustomerServiceInsufficientStorageException.class, () -> controller.findAll(null));
     }
 
     @Test
     void findAllWithUserHeader() {
-        List<CustomerDTO> customers = controller.findAll("debug"); // Act
-        assertEquals(3, customers.size()); // Assert
+        assertThrows(CustomerServiceInsufficientStorageException.class, () -> controller.findAll("debug"));
     }
 
     @Test
@@ -52,8 +51,8 @@ class CustomerControllerTest {
     @Test
     void create() {
         controller.create(new CustomerDTO(4, "Sandra", "Peters", "India"));
-        List<CustomerDTO> customers = controller.findAll("");
-        assertEquals(4, customers.size());
+        CustomerDTO customers = controller.findById(4);
+        assertEquals("Sandra", customers.firstName());
     }
 
     @Test
@@ -66,7 +65,6 @@ class CustomerControllerTest {
     @Test
     void delete() {
         controller.delete(3);
-        List<CustomerDTO> customers = controller.findAll("");
-        assertEquals(2, customers.size());
+        assertThrows(CustomerNotFoundException.class, () -> controller.findById(3));
     }
 }

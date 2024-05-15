@@ -10,7 +10,7 @@
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
     <artifactId>common</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.2-exception</version>
     <name>common</name>
     <description>Common artifacts</description>
 

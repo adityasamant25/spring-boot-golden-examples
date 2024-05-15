@@ -1,6 +1,7 @@
 package com.adityasamant.learnings.customersbasic.web.exception;
 
 import com.adityasamant.learnings.common.domain.customers.CustomerNotFoundException;
+import com.adityasamant.learnings.common.domain.customers.CustomerServiceInsufficientStorageException;
 import java.net.URI;
 import java.time.Instant;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,17 @@ class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, e.getMessage());
         problemDetail.setTitle("Customer Not Found");
         problemDetail.setType(NOT_FOUND_TYPE);
+        problemDetail.setProperty("service", SERVICE_NAME);
+        problemDetail.setProperty("error_category", "Generic");
+        problemDetail.setProperty("timestamp", Instant.now());
+        return problemDetail;
+    }
+
+    @ExceptionHandler(CustomerServiceInsufficientStorageException.class)
+    ProblemDetail handleCustomerServiceInsufficientStorageException(CustomerServiceInsufficientStorageException e) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.INSUFFICIENT_STORAGE, e.getMessage());
+        problemDetail.setTitle("Insufficient Storage");
+        problemDetail.setType(ISE_FOUND_TYPE);
         problemDetail.setProperty("service", SERVICE_NAME);
         problemDetail.setProperty("error_category", "Generic");
         problemDetail.setProperty("timestamp", Instant.now());

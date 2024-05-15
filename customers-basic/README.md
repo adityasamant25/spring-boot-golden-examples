@@ -10,6 +10,10 @@ This module is the most basic REST based microservice that can be created with S
 * Uses `spring-boot-actuator` to expose the default metrics and health information.
 
 ## What's new
+### v0.0.3-exception
+This is a temporary version that is created to simulate an exception in the application.  
+The changes will not be merged with the main branch.
+
 ### v0.0.3
 * Enabled multi-architecture support for the Docker image
 
@@ -34,7 +38,7 @@ cd spring-boot-golden-examples/customers-basic
 
 #### Run
 ```
-java -jar target/customers-basic-0.0.3.jar
+java -jar target/customers-basic-0.0.3-exception.jar
 ```
 
 #### Access from a terminal
@@ -44,7 +48,7 @@ curl localhost:8081/api/customers
 
 The expected output is:
 ```json
-[{"id":1,"firstName":"John","lastName":"Doe","country":"Australia"},{"id":2,"firstName":"Alice","lastName":"Smith","country":"USA"},{"id":3,"firstName":"Bob","lastName":"Stevens","country":"England"}]
+{"type":"https://api.customers-basic.com/errors/server-error","title":"Insufficient Storage","status":507,"detail":"Request failed due to insufficient storage","instance":"/api/customers","service":"customers-basic","error_category":"Generic","timestamp":"2024-05-15T06:32:36.722571Z"}% 
 ```
 
 #### Access from a browser
@@ -130,7 +134,7 @@ please tag it appropriately.
 > The below command will run the application with the image residing on the `adityasamantlearnings/springboot-customers-basic` repository which supports both x86 and arm64 CPU architectures.
 Replace `adityasamantlearnings/springboot-customers-basic:0.0.3` with the appropriate name and tag of the image you wish to run.
 ```
-docker run -d --name customers-basic -p 8081:8081 adityasamantlearnings/springboot-customers-basic:0.0.3
+docker run -d --name customers-basic -p 8081:8081 adityasamantlearnings/springboot-customers-basic:0.0.3-exception
 ```
 
 #### Access from a terminal
@@ -140,7 +144,7 @@ curl localhost:8081/api/customers
 
 The expected output is:
 ```json
-[{"id":1,"firstName":"John","lastName":"Doe","country":"Australia"},{"id":2,"firstName":"Alice","lastName":"Smith","country":"USA"},{"id":3,"firstName":"Bob","lastName":"Stevens","country":"England"}]
+{"type":"https://api.customers-basic.com/errors/server-error","title":"Insufficient Storage","status":507,"detail":"Request failed due to insufficient storage","instance":"/api/customers","service":"customers-basic","error_category":"Generic","timestamp":"2024-05-15T06:35:42.067223585Z"}% 
 ```
 
 #### Access from a browser
@@ -149,13 +153,13 @@ http://localhost:8081/api/customers
 #### Push the image to DockerHub
 Example:
 ```
-docker image push adityasamantlearnings/springboot-customers-basic:0.0.3
+docker image push adityasamantlearnings/springboot-customers-basic:0.0.3-exception
 ```
 
 #### Build and Push a multi-architecture supported image to DockerHub
 Example:
 ```
-docker buildx build --platform linux/amd64,linux/arm64 -t adityasamantlearnings/springboot-customers-basic:0.0.3 --push .
+docker buildx build --platform linux/amd64,linux/arm64 -t adityasamantlearnings/springboot-customers-basic:0.0.3-exception --push .
 ```
 
 
@@ -163,7 +167,7 @@ docker buildx build --platform linux/amd64,linux/arm64 -t adityasamantlearnings/
 ```
 docker stop customers-basic
 docker rm customers-basic
-docker rmi adityasamantlearnings/springboot-customers-basic:0.0.3
+docker rmi adityasamantlearnings/springboot-customers-basic:0.0.3-exception
 ```
 
 ### Run on Kubernetes
