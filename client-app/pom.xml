@@ -43,7 +43,7 @@
         <dependency>
             <groupId>com.adityasamant.learnings</groupId>
             <artifactId>common</artifactId>
-            <version>0.0.2</version>
+            <version>0.0.2-exception</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
