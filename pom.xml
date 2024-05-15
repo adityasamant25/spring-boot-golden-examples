@@ -30,6 +30,7 @@
         <module>common</module>
         <module>customers-basic</module>
         <module>client-app</module>
+        <module>customers-ai</module>
     </modules>
 
     <build>

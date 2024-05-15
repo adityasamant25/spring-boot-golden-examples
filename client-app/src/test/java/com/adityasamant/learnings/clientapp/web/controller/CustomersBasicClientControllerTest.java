@@ -35,9 +35,6 @@ public class CustomersBasicClientControllerTest {
     List<CustomerDTO> customersAsList = new ArrayList<>();
     ObjectMapper mapper = new ObjectMapper();
 
-    @Autowired
-    private CustomersBasicClient customersBasicClient;
-
     @BeforeEach
     void setUp() {
         customersAsList = List.of(
@@ -156,7 +153,7 @@ public class CustomersBasicClientControllerTest {
                         .content(mapper.writeValueAsString(newCustomer)))
                 .andExpect(status().isCreated());
 
-        verify(customersBasicClient, times(1)).createCustomer(newCustomer);
+        verify(client, times(1)).createCustomer(newCustomer);
     }
 
     @Test
@@ -173,7 +170,7 @@ public class CustomersBasicClientControllerTest {
                         .content(mapper.writeValueAsString(newCustomer)))
                 .andExpect(status().isBadRequest());
 
-        verify(customersBasicClient, times(0)).createCustomer(newCustomer);
+        verify(client, times(0)).createCustomer(newCustomer);
     }
 
     @Test
@@ -188,7 +185,7 @@ public class CustomersBasicClientControllerTest {
         mvc.perform(put("/api/customers/1").contentType("application/json").content(mapper.writeValueAsString(updated)))
                 .andExpect(status().isNoContent());
 
-        verify(customersBasicClient, times(1)).updateCustomer(updated, 1);
+        verify(client, times(1)).updateCustomer(updated, 1);
     }
 
     @Test
@@ -203,7 +200,7 @@ public class CustomersBasicClientControllerTest {
         mvc.perform(put("/api/customers/1").contentType("application/json").content(mapper.writeValueAsString(updated)))
                 .andExpect(status().isBadRequest());
 
-        verify(customersBasicClient, times(0)).updateCustomer(updated, 1);
+        verify(client, times(0)).updateCustomer(updated, 1);
     }
 
     @Test
@@ -220,7 +217,7 @@ public class CustomersBasicClientControllerTest {
                         .content(mapper.writeValueAsString(updated)))
                 .andExpect(status().isNotFound());
 
-        verify(customersBasicClient, times(1)).updateCustomer(updated, 97);
+        verify(client, times(1)).updateCustomer(updated, 97);
     }
 
     @Test
@@ -231,7 +228,7 @@ public class CustomersBasicClientControllerTest {
         // then
         mvc.perform(delete("/api/customers/1")).andExpect(status().isNoContent());
 
-        verify(customersBasicClient, times(1)).deleteCustomer(1);
+        verify(client, times(1)).deleteCustomer(1);
     }
 
     @Test
@@ -243,6 +240,6 @@ public class CustomersBasicClientControllerTest {
         // then
         mvc.perform(delete("/api/customers/97")).andExpect(status().isNotFound());
 
-        verify(customersBasicClient, times(1)).deleteCustomer(97);
+        verify(client, times(1)).deleteCustomer(97);
     }
 }
