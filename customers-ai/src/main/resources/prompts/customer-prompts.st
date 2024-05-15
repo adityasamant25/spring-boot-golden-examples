@@ -1,0 +1,1 @@
+Return a list of {count} customers in json format. The fields should contain id, firstName, lastName and country. {format}

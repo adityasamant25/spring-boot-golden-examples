@@ -1,0 +1,4 @@
+The following is a list of customers of XYZ corp as of the year 2024.
+
+1. John Doe from the USA. He has the customer id of 1.
+2. Stacy Carter from UK. She has the customer id of 2.
