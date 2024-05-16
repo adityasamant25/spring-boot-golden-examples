@@ -96,17 +96,41 @@ class CustomersAiControllerTest {
                 """;
 
         ChatResponse chatResponse = new ChatResponse(List.of(new Generation(response)));
-        BeanOutputParser<CustomersDTO> customerDTOBeanOutputParser = new BeanOutputParser<>(CustomersDTO.class);
 
-        PromptTemplate promptTemplate = new PromptTemplate(
-                "Return a list of {count} customers in json format. The fields should contain id, firstName, lastName and country. {format}", Map.of("count", 3, "format", customerDTOBeanOutputParser.getFormat()));
-        Prompt prompt = promptTemplate.create();
         // when
-        when(client.call(prompt)).thenReturn(chatResponse);
+        when(client.call(new Prompt(""))).thenReturn(chatResponse);
 
         // then
         mvc.perform(get("/api/customers"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(response));
+    }
+
+    @Test
+    void shouldGenerateDefaultResponseWhenPromptStuffingIsFalse() throws Exception {
+        String response = "I'm sorry, but I do not know the answer to that.";
+        ChatResponse chatResponse = new ChatResponse(List.of(new Generation(response)));
+
+        // when
+        when(client.call(new Prompt(""))).thenReturn(chatResponse);
+
+        //then
+        mvc.perform(get("/api/customers/stuff"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(response));
+    }
+
+    @Test
+    void shouldGenerateValidResponseWhenPromptStuffingIsTrue() throws Exception {
+        String response = "The customers of XYZ corp as of the year 2024 are John Doe from the USA with the customer id of 1 and Stacy Carter from UK with the customer id of 2.";
+        ChatResponse chatResponse = new ChatResponse(List.of(new Generation(response)));
+
+        // when
+        when(client.call(new Prompt(""))).thenReturn(chatResponse);
+
+        //then
+        mvc.perform(get("/api/customers/stuff?stuffit=true"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(response));
     }
 }
