@@ -1,28 +1,23 @@
 package com.adityasamant.learnings.customersai.web.controllers;
 
-import com.adityasamant.learnings.common.domain.customers.CustomersDTO;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.ai.chat.ChatClient;
 import org.springframework.ai.chat.ChatResponse;
 import org.springframework.ai.chat.Generation;
 import org.springframework.ai.chat.prompt.Prompt;
-import org.springframework.ai.chat.prompt.PromptTemplate;
-import org.springframework.ai.parser.BeanOutputParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.List;
-import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(CustomersAiController.class)
@@ -36,7 +31,8 @@ class CustomersAiControllerTest {
 
     @Test
     void shouldGenerateCustomersWithDefaultMessage() throws Exception {
-        String response = """
+        String response =
+                """
                 [
                     {
                         "country": "USA",
@@ -58,7 +54,8 @@ class CustomersAiControllerTest {
                     }
                 ]
                 """;
-        String defaultMessage = "Return a list of 3 customers in json format. The fields should contain id, firstName, lastName and country";
+        String defaultMessage =
+                "Return a list of 3 customers in json format. The fields should contain id, firstName, lastName and country";
         // when
         when(client.call(defaultMessage)).thenReturn(response);
 
@@ -70,7 +67,8 @@ class CustomersAiControllerTest {
 
     @Test
     void shouldGenerateCustomersWithPrompt() throws Exception {
-        String response = """
+        String response =
+                """
                  {
                    "customers": [
                      {
@@ -114,7 +112,7 @@ class CustomersAiControllerTest {
         // when
         when(client.call(new Prompt(""))).thenReturn(chatResponse);
 
-        //then
+        // then
         mvc.perform(get("/api/customers/stuff"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(response));
@@ -122,13 +120,14 @@ class CustomersAiControllerTest {
 
     @Test
     void shouldGenerateValidResponseWhenPromptStuffingIsTrue() throws Exception {
-        String response = "The customers of XYZ corp as of the year 2024 are John Doe from the USA with the customer id of 1 and Stacy Carter from UK with the customer id of 2.";
+        String response =
+                "The customers of XYZ corp as of the year 2024 are John Doe from the USA with the customer id of 1 and Stacy Carter from UK with the customer id of 2.";
         ChatResponse chatResponse = new ChatResponse(List.of(new Generation(response)));
 
         // when
         when(client.call(new Prompt(""))).thenReturn(chatResponse);
 
-        //then
+        // then
         mvc.perform(get("/api/customers/stuff?stuffit=true"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(response));
