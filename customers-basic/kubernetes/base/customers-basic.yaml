@@ -16,7 +16,7 @@ spec:
         app: springboot-customers-basic
     spec:
       containers:
-        - image: adityasamantlearnings/springboot-customers-basic:0.0.3
+        - image: adityasamantlearnings/springboot-customers-basic:0.0.4-SNAPSHOT
           name: springboot-customers-basic
 
 ---
