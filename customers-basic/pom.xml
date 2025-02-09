@@ -5,11 +5,11 @@
     <parent>
         <groupId>com.adityasamant.learnings</groupId>
         <artifactId>spring-boot-golden-examples</artifactId>
-        <version>0.0.2</version>
+        <version>0.0.3-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
     <artifactId>customers-basic</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.4-SNAPSHOT</version>
     <name>customers-basic</name>
     <description>customers-basic</description>
     <properties>
@@ -37,6 +37,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
