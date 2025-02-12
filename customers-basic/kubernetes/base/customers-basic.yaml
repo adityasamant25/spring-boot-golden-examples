@@ -18,6 +18,14 @@ spec:
       containers:
         - image: adityasamantlearnings/springboot-customers-basic:0.0.4-SNAPSHOT
           name: springboot-customers-basic
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
 
 ---
 
