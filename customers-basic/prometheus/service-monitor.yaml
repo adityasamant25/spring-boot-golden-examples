@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app: springboot-customers-basic
+    release: kind-prometheus
+  name: customers-basic-metrics
+  namespace: monitoring
+spec:
+  endpoints:
+    - interval: 15s
+      path: /actuator/prometheus
+      port: web
+  fallbackScrapeProtocol: PrometheusText1.0.0
+  namespaceSelector:
+    matchNames:
+      - customers-basic
+  selector:
+    matchLabels:
+      app: springboot-customers-basic
