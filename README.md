@@ -6,7 +6,7 @@ follow the best practices. The project is kept up-to-date with the latest Spring
 accompanied by unit and integration tests. CRUD operations are demonstrated using a sample entity called `Customers`.
 
 ## Features
-* The project is based on the latest LTS release of Java (21) and Spring Boot 3.2.x
+* The project is based on the latest LTS release of Java (21) and Spring Boot 3.4.x
 * Each module is containerized using Docker and deployable on Kubernetes
 * Docker images are built using the `spring-boot-maven-plugin`
 * Docker images are multi-architecture (x86, arm64) compliant
