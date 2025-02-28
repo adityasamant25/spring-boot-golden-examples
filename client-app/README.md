@@ -11,6 +11,9 @@ in Spring Framework 6.x
 * Uses `spring-boot-actuator` to expose the default metrics and health information.
 
 ## What's new
+### v0.0.3-SNAPSHOT
+* Fixed NullPointerException in client-app findAllCustomers
+
 ### v0.0.2
 * Enabled multi-architecture support for the Docker image
 

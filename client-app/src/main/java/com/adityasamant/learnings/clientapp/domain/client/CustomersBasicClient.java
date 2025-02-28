@@ -22,6 +22,10 @@ public class CustomersBasicClient {
 
     public List<CustomerDTO> findAllCustomers(String user) {
         try {
+            if (user == null) {
+                user = "";
+            }
+
             return restClient
                     .get()
                     .uri("/api/customers")
