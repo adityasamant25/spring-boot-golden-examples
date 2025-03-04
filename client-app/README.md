@@ -13,6 +13,7 @@ in Spring Framework 6.x
 ## What's new
 ### v0.0.3-SNAPSHOT
 * Fixed NullPointerException in client-app findAllCustomers
+* Enabled prometheus metrics via micrometer
 
 ### v0.0.2
 * Enabled multi-architecture support for the Docker image
