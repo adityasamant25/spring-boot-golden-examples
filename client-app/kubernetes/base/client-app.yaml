@@ -19,6 +19,9 @@ spec:
         - image: adityasamantlearnings/springboot-customers-basic:0.0.5-SNAPSHOT
           name: springboot-customers-basic
           imagePullPolicy: Always
+          env:
+            - name: TRACING_URL
+              value: "http://jaeger-service.tracing.svc.cluster.local:4318/v1/traces"
           resources:
             requests:
               memory: "1Gi"
@@ -71,6 +74,8 @@ spec:
           env:
             - name: CUSTOMERS_BASIC_SERVICE_URL
               value: "http://springboot-customers-basic:8081"
+            - name: TRACING_URL
+              value: "http://jaeger-service.tracing.svc.cluster.local:4318/v1/traces"
           resources:
             requests:
               memory: "1Gi"
