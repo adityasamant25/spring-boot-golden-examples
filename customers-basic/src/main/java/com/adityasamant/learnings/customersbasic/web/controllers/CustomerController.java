@@ -27,7 +27,7 @@ public class CustomerController {
 
     @GetMapping("")
     public List<CustomerDTO> findAll(@RequestHeader(value = "user", required = false) String user) {
-        log.info("findAll is called with user header: {}", user);
+        log.info("findAll is called in customers-basic with user header: {}", user);
         return repository.findAll().stream().map(CustomerMapper::toCustomerDTO).collect(Collectors.toList());
     }
 

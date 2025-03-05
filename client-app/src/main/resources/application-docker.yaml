@@ -1,0 +1,4 @@
+customers:
+    basic:
+        service:
+            url: http://customers-basic:8081

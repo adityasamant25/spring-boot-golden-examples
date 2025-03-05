@@ -4,12 +4,17 @@ import com.adityasamant.learnings.clientapp.domain.client.CustomersBasicClient;
 import com.adityasamant.learnings.common.domain.customers.CustomerDTO;
 import jakarta.validation.Valid;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/customers")
 public class CustomersBasicClientController {
+
+    Logger log = LoggerFactory.getLogger(CustomersBasicClientController.class);
 
     private final CustomersBasicClient customersBasicClient;
 
@@ -19,6 +24,7 @@ public class CustomersBasicClientController {
 
     @GetMapping("")
     public List<CustomerDTO> findAllCustomers(@RequestHeader(name = "user", required = false) String user) {
+        log.info("findAllCustomers is called in client-app with user header: {}", user);
         return customersBasicClient.findAllCustomers(user);
     }
 
