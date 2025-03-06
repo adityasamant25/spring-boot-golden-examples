@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.adityasamant.learnings</groupId>
     <artifactId>spring-boot-golden-examples</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.5</version>
     <packaging>pom</packaging>
     <name>spring-boot</name>
     <description>spring-boot</description>

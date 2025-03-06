@@ -10,6 +10,9 @@ This module is the most basic REST based microservice that can be created with S
 * Uses `spring-boot-actuator` to expose the default metrics and health information.
 
 ## What's new
+### v0.0.5-SNAPSHOT
+Added distributed tracing support using Jaeger
+
 ### v0.0.4
 * Enabled prometheus metrics via micrometer
 

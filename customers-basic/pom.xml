@@ -5,11 +5,11 @@
     <parent>
         <groupId>com.adityasamant.learnings</groupId>
         <artifactId>spring-boot-golden-examples</artifactId>
-        <version>0.0.4</version>
+        <version>0.0.5</version>
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
     <artifactId>customers-basic</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.5</version>
     <name>customers-basic</name>
     <description>customers-basic</description>
     <properties>
@@ -42,6 +42,15 @@
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
             <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-tracing-bridge-otel</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-exporter-otlp</artifactId>
         </dependency>
 
         <dependency>

@@ -5,7 +5,7 @@ metadata:
     app: springboot-customers-basic
   name: springboot-customers-basic
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: springboot-customers-basic
@@ -16,8 +16,19 @@ spec:
         app: springboot-customers-basic
     spec:
       containers:
-        - image: adityasamantlearnings/springboot-customers-basic:0.0.4
+        - image: adityasamantlearnings/springboot-customers-basic:0.0.5
           name: springboot-customers-basic
+          imagePullPolicy: Always
+          env:
+            - name: TRACING_URL
+              value: "http://jaeger-service.tracing.svc.cluster.local:4318/v1/traces"
+          resources:
+            requests:
+              memory: "1Gi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "1"
 
 ---
 
@@ -46,7 +57,7 @@ metadata:
     app: springboot-client-app
   name: springboot-client-app
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: springboot-client-app
@@ -57,11 +68,21 @@ spec:
         app: springboot-client-app
     spec:
       containers:
-        - image: adityasamantlearnings/springboot-client-app:0.0.3
+        - image: adityasamantlearnings/springboot-client-app:0.0.4
           name: client-app
+          imagePullPolicy: Always
           env:
             - name: CUSTOMERS_BASIC_SERVICE_URL
               value: "http://springboot-customers-basic:8081"
+            - name: TRACING_URL
+              value: "http://jaeger-service.tracing.svc.cluster.local:4318/v1/traces"
+          resources:
+            requests:
+              memory: "1Gi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "1"
 
 ---
 

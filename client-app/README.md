@@ -11,6 +11,9 @@ in Spring Framework 6.x
 * Uses `spring-boot-actuator` to expose the default metrics and health information.
 
 ## What's new
+### v0.0.4-SNAPSHOT
+Added distributed tracing support using Jaeger
+
 ### v0.0.3
 * Fixed NullPointerException in client-app findAllCustomers
 * Enabled prometheus metrics via micrometer
