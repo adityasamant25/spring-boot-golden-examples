@@ -1,0 +1,199 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-pvc
+  namespace: logging
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: es-pvc
+  namespace: logging
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: graylog-pvc
+  namespace: logging
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb
+  namespace: logging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+        - name: mongodb
+          image: mongo:3
+          volumeMounts:
+            - mountPath: /data/db
+              name: mongo-storage
+      volumes:
+        - name: mongo-storage
+          persistentVolumeClaim:
+            claimName: mongo-pvc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb
+  namespace: logging
+spec:
+  selector:
+    app: mongodb
+  ports:
+    - protocol: TCP
+      port: 27017
+      targetPort: 27017
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elasticsearch
+  namespace: logging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: elasticsearch
+  template:
+    metadata:
+      labels:
+        app: elasticsearch
+    spec:
+      containers:
+        - name: elasticsearch
+          image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.8.20
+          env:
+            - name: http.host
+              value: "0.0.0.0"
+            - name: transport.host
+              value: "localhost"
+            - name: network.host
+              value: "0.0.0.0"
+            - name: ES_JAVA_OPTS
+              value: "-Xms512m -Xmx512m"
+          volumeMounts:
+            - mountPath: /usr/share/elasticsearch/data
+              name: es-storage
+      volumes:
+        - name: es-storage
+          persistentVolumeClaim:
+            claimName: es-pvc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch
+  namespace: logging
+spec:
+  selector:
+    app: elasticsearch
+  ports:
+    - protocol: TCP
+      port: 9200
+      targetPort: 9200
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: graylog
+  namespace: logging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: graylog
+  template:
+    metadata:
+      labels:
+        app: graylog
+    spec:
+      containers:
+        - name: graylog
+          image: graylog/graylog:4.2
+          env:
+            - name: GRAYLOG_PASSWORD_SECRET
+              value: "daglisecret12345"
+            - name: GRAYLOG_ROOT_PASSWORD_SHA2
+              value: "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"
+            - name: GRAYLOG_HTTP_EXTERNAL_URI
+              value: "http://127.0.0.1:9000/"
+            - name: GRAYLOG_MONGODB_URI
+              value: "mongodb://mongodb:27017/graylog"
+          ports:
+            - containerPort: 9000
+            - containerPort: 1514
+            - containerPort: 12201
+          volumeMounts:
+            - mountPath: /usr/share/graylog/data/journal
+              name: graylog-storage
+      volumes:
+        - name: graylog-storage
+          persistentVolumeClaim:
+            claimName: graylog-pvc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: graylog
+  namespace: logging
+spec:
+  selector:
+    app: graylog
+  ports:
+    - name: web
+      protocol: TCP
+      port: 9000
+      targetPort: 9000
+    - name: syslog-tcp
+      protocol: TCP
+      port: 1514
+      targetPort: 1514
+    - name: syslog-udp
+      protocol: UDP
+      port: 1514
+      targetPort: 1514
+    - name: gelf-tcp
+      protocol: TCP
+      port: 12201
+      targetPort: 12201
+    - name: gelf-udp
+      protocol: UDP
+      port: 12201
+      targetPort: 12201
