@@ -22,6 +22,10 @@ spec:
           env:
             - name: TRACING_URL
               value: "http://jaeger-service.tracing.svc.cluster.local:4318/v1/traces"
+            - name: GRAYLOG_HOST
+              value: "graylog.logging.svc.cluster.local"
+            - name: GRAYLOG_PORT
+              value: "12201"
           resources:
             requests:
               memory: "1Gi"
@@ -76,6 +80,10 @@ spec:
               value: "http://springboot-customers-basic:8081"
             - name: TRACING_URL
               value: "http://jaeger-service.tracing.svc.cluster.local:4318/v1/traces"
+            - name: GRAYLOG_HOST
+              value: "graylog.logging.svc.cluster.local"
+            - name: GRAYLOG_PORT
+              value: "12201"
           resources:
             requests:
               memory: "1Gi"
