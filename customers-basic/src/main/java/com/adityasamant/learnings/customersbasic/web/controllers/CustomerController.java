@@ -33,18 +33,21 @@ public class CustomerController {
 
     @GetMapping("/{id}")
     public CustomerDTO findById(@PathVariable Integer id) {
+        log.info("findById is called in customers-basic for customer id: {}", id);
         return CustomerMapper.toCustomerDTO(repository.findById(id).orElseThrow(CustomerNotFoundException::new));
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
     public void create(@RequestBody @Valid CustomerDTO customerDTO) {
+        log.info("create is called in customers-basic for customer id: {}", customerDTO.id());
         repository.save(CustomerMapper.toCustomer(customerDTO));
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
     public void update(@RequestBody @Valid CustomerDTO customerDTO, @PathVariable Integer id) {
+        log.info("update is called in customers-basic for customer id: {}", id);
         if (repository.checkInvalidCustomer(id)) {
             throw new CustomerNotFoundException("Customer not found.");
         }
@@ -54,6 +57,7 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
+        log.info("delete is called in customers-basic for customer id: {}", id);
         if (repository.checkInvalidCustomer(id)) {
             throw new CustomerNotFoundException("Customer not found.");
         }
