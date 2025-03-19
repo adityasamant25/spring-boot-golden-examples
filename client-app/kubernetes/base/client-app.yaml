@@ -16,12 +16,16 @@ spec:
         app: springboot-customers-basic
     spec:
       containers:
-        - image: adityasamantlearnings/springboot-customers-basic:0.0.5
+        - image: adityasamantlearnings/springboot-customers-basic:0.0.6
           name: springboot-customers-basic
           imagePullPolicy: Always
           env:
             - name: TRACING_URL
               value: "http://jaeger-service.tracing.svc.cluster.local:4318/v1/traces"
+            - name: GRAYLOG_HOST
+              value: "graylog.logging.svc.cluster.local"
+            - name: GRAYLOG_PORT
+              value: "12201"
           resources:
             requests:
               memory: "1Gi"
@@ -68,7 +72,7 @@ spec:
         app: springboot-client-app
     spec:
       containers:
-        - image: adityasamantlearnings/springboot-client-app:0.0.4
+        - image: adityasamantlearnings/springboot-client-app:0.0.5
           name: client-app
           imagePullPolicy: Always
           env:
@@ -76,6 +80,10 @@ spec:
               value: "http://springboot-customers-basic:8081"
             - name: TRACING_URL
               value: "http://jaeger-service.tracing.svc.cluster.local:4318/v1/traces"
+            - name: GRAYLOG_HOST
+              value: "graylog.logging.svc.cluster.local"
+            - name: GRAYLOG_PORT
+              value: "12201"
           resources:
             requests:
               memory: "1Gi"

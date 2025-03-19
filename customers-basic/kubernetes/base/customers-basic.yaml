@@ -16,7 +16,7 @@ spec:
         app: springboot-customers-basic
     spec:
       containers:
-        - image: adityasamantlearnings/springboot-customers-basic:0.0.4
+        - image: adityasamantlearnings/springboot-customers-basic:0.0.6
           name: springboot-customers-basic
           imagePullPolicy: Always
           resources:
