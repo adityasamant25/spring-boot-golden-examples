@@ -10,7 +10,7 @@ This module is the most basic REST based microservice that can be created with S
 * Uses `spring-boot-actuator` to expose the default metrics and health information.
 
 ## What's new
-### v0.0.6-SNAPSHOT
+### v0.0.6
 Added centralized logging support using Graylog
 
 ### v0.0.5

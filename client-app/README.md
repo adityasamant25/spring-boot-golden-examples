@@ -11,7 +11,7 @@ in Spring Framework 6.x
 * Uses `spring-boot-actuator` to expose the default metrics and health information.
 
 ## What's new
-### v0.0.5-SNAPSHOT
+### v0.0.5
 Added centralized logging support using Graylog
 
 ### v0.0.4

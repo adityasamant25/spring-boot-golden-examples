@@ -5,11 +5,11 @@
     <parent>
         <groupId>com.adityasamant.learnings</groupId>
         <artifactId>spring-boot-golden-examples</artifactId>
-        <version>0.0.6-SNAPSHOT</version>
+        <version>0.0.6</version>
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
     <artifactId>customers-basic</artifactId>
-    <version>0.0.6-SNAPSHOT</version>
+    <version>0.0.6</version>
     <name>customers-basic</name>
     <description>customers-basic</description>
     <properties>

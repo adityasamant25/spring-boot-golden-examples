@@ -16,7 +16,7 @@ spec:
         app: springboot-customers-basic
     spec:
       containers:
-        - image: adityasamantlearnings/springboot-customers-basic:0.0.6-SNAPSHOT
+        - image: adityasamantlearnings/springboot-customers-basic:0.0.6
           name: springboot-customers-basic
           imagePullPolicy: Always
           env:
@@ -72,7 +72,7 @@ spec:
         app: springboot-client-app
     spec:
       containers:
-        - image: adityasamantlearnings/springboot-client-app:0.0.5-SNAPSHOT
+        - image: adityasamantlearnings/springboot-client-app:0.0.5
           name: client-app
           imagePullPolicy: Always
           env:
