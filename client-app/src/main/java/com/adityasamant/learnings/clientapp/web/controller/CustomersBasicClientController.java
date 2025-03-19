@@ -29,24 +29,28 @@ public class CustomersBasicClientController {
 
     @GetMapping("/{id}")
     public CustomerDTO findCustomerById(@PathVariable Integer id) {
+        log.info("findCustomerById is called in client-app for customer id: {}", id);
         return customersBasicClient.findCustomerById(id);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
     public void create(@RequestBody @Valid CustomerDTO customerDTO) {
+        log.info("createCustomer is called in client-app for customer id: {}", customerDTO.id());
         customersBasicClient.createCustomer(customerDTO);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
     public void updateCustomer(@RequestBody @Valid CustomerDTO customerDTO, @PathVariable Integer id) {
+        log.info("updateCustomer is called in client-app for customer id: {}", id);
         customersBasicClient.updateCustomer(customerDTO, id);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public void deleteCustomer(@PathVariable Integer id) {
+        log.info("deleteCustomer is called in client-app for customer id: {}", id);
         customersBasicClient.deleteCustomer(id);
     }
 }
