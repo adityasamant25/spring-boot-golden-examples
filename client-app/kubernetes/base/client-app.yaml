@@ -5,7 +5,7 @@ metadata:
     app: springboot-customers-basic
   name: springboot-customers-basic
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: springboot-customers-basic
