@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resilience-configuration>
+    <enhancer>dataflow_8248</enhancer>
+    <add-default-implementation if-enhancer="dataflow_8248" class="com.netcracker.mediation.dataflow.impl.util.trigger.jms.JMSMessageListener" methodName="toString" methodDescr="()Ljava/lang/String;"/>
+    <add-default-implementation skip-super="true" class="com.netcracker.mediation.common.configuration.id.ConfigID" methodName="getName" methodDescr="()Ljava/lang/String;"/>
+    <ruleset if-enhancer="dataflow_8248">
+        <rule>
+            <class>com.netcracker.mediation.dataflow.impl.util.threads.DataFlowAwareRunnable</class>
+            <method>run</method>
+            <create-span name="nc.toms.dataflow"/>
+        </rule>
+        <rule>
+            <class>com.netcracker.mediation.dataflow.impl.util.trigger.jms.JMSMessageListener</class>
+            <method>toString</method>
+            <execute-instead return="java.lang.String">toString$resilienceagent</execute-instead>
+        </rule>
+        <rule>
+            <class>com.netcracker.mediation.dataflow.impl.core.NestedDiagnosticContexts</class>
+            <method>pushRootSession</method>
+            <method>pushSession</method>
+            <execute-after static="true">pushSession$resilienceagent</execute-after>
+            <break-point-after/>
+        </rule>
+        <rule>
+            <class>com.netcracker.mediation.dataflow.impl.core.NestedDiagnosticContexts</class>
+            <method>pushDataFlowProcess</method>
+            <execute-after static="true">pushDataFlowProcess$resilienceagent</execute-after>
+            <break-point-after/>
+        </rule>
+        <rule>
+            <class>com.netcracker.mediation.dataflow.impl.core.Processor</class>
+            <method>startSession(RootSession)</method>
+            <execute-before static="true">startSession$resilienceagent(p1)</execute-before>
+            <break-point/>
+        </rule>
+        <rule>
+            <class>com.netcracker.mediation.dataflow.impl.core.state.StateHolderIDFactory</class>
+            <method>newRootSessionID(BigInteger,StartParameters)</method>
+            <execute-after static="true">newRootSessionID$resilienceagent(p1,p2,result)</execute-after>
+        </rule>
+        <rule>
+            <class>com.netcracker.mediation.dataflow.impl.core.state.StateHolderIDFactory</class>
+            <method>newRootSessionID(BigInteger,StartParameters,StatusProcessor)</method>
+            <execute-after static="true">newRootSessionID$resilienceagent(p1,p2,result)</execute-after>
+        </rule>
+        <rule>
+            <class>com.netcracker.mediation.dataflow.impl.core.state.StateHolderIDFactory</class>
+            <method>newRunnableElementID(AbstractContainerSession,BigInteger,String,BigInteger)</method>
+            <execute-after static="true">newRunnableElementID$resilienceagent(p4,p3,result)</execute-after>
+        </rule>
+        <rule>
+            <class>com.netcracker.mediation.dataflow.impl.core.state.StateHolderIDFactory</class>
+            <method>newChildSessionID(AbstractContainerSession,String,Configuration,BigInteger)</method>
+            <execute-after static="true">newChildSessionID$resilienceagent(p3,p2,result)</execute-after>
+        </rule>
+    </ruleset>
+</resilience-configuration>

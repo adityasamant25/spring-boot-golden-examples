@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resilience-configuration>
+    <enhancer>wl_jta</enhancer>
+    <ruleset if-enhancer="wl_jta">
+        <rule>
+            <class>weblogic.transaction.internal.TransactionManagerImpl</class>
+            <method>associateTxWithThread(TransactionImpl)</method>
+            <execute-before>dumpTransaction$resilienceagent(p1)</execute-before>
+        </rule>
+    </ruleset>
+
+    <ruleset if-enhancer="wl_jta">
+        <rule>
+            <class>org.glassfish.transaction.TransactionManagerImplCommon</class>
+            <method>associateTxWithThread(TransactionImpl)</method>
+            <execute-before>dumpTransaction$resilienceagent(p1)</execute-before>
+        </rule>
+    </ruleset>
+</resilience-configuration>

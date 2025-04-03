@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resilience-configuration>
+    <enhancer>wl_rmi</enhancer>
+    <ruleset>
+        <rule>
+            <class>weblogic.rmi.cluster.ClusterableRemoteRef</class>
+            <method>invoke(Remote, RuntimeMethodDescriptor, Object[], Method)</method>
+            <execute-before>bindMethod$resilienceagent(p4)</execute-before>
+            <create-span name="java.rmi.out"/>
+            <break-point/>
+        </rule>
+    </ruleset>
+</resilience-configuration>

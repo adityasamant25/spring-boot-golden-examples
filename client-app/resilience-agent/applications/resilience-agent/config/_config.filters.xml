@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<resilience-configuration>
+    <ruleset>
+        <rule id="filter-rule" src="_config.filters.default.xml"/>
+    </ruleset>
+</resilience-configuration>

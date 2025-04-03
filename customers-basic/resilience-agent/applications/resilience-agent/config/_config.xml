@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resilience-configuration>
+    <!-- Uncomment to store transformed class files:
+           <store-transformed-classes/>
+      -->
+    <!-- Uncomment to verify transformed class files:
+           <verify-classes/>
+      -->
+    <resilience-agent enabled="true"/>
+    <circuit-breakers enabled="true"/>
+    <execution-limiters enabled="true"/>
+    <break-points enabled="true"/>
+    <inflight-cancels enabled="true"/>
+
+    <ruleset>
+        <rule src="_config.filters.xml"/>
+    </ruleset>
+
+    <properties>
+        <property name="reset" value="1"/>
+        <property name="web_url.static_ext">
+            <value>svg</value>
+            <value>css</value>
+            <value>js</value>
+            <value>png</value>
+            <value>gif</value>
+            <value>woff</value>
+            <value>woff2</value>
+            <value>ico</value>
+            <value>jpg</value>
+            <value>jpeg</value>
+        </property>
+    </properties>
+
+    <span name="web.request.in" bind="replace_http_in"/>
+    <span name="web.request.out" bind="replace_http_out"/>
+    <span name="java.rmi.out" bind="true"/>
+    <span name="java.jms.in" bind="true"/>
+    <span name="job" bind="true"/>
+    <span name="nc.toms.dataflow" bind="true"/>
+</resilience-configuration>

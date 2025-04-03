@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resilience-configuration>
+    <enhancer>apache_httpclient</enhancer>
+    <ruleset>
+        <rule>
+            <class>org.apache.commons.httpclient.HttpClient</class>
+            <method>executeMethod(HostConfiguration, HttpMethod, HttpState)</method>
+            <execute-before>bindHttpRequest$resilienceagent(p2)</execute-before>
+            <create-span name="web.request.out"/>
+            <break-point/>
+        </rule>
+    </ruleset>
+</resilience-configuration>

@@ -1,0 +1,89 @@
+<configuration  scan="true" scanPeriod="30 seconds">
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/resilience-agent/resilience-agent-${com.netcracker.resilienceagent.serverName}.log</file>
+        <Append>true</Append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <FileNamePattern>logs/resilience-agent/resilience-agent-${com.netcracker.resilienceagent.serverName}_%i.log.zip</FileNamePattern>
+            <MinIndex>1</MinIndex>
+            <MaxIndex>2</MaxIndex>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>5MB</MaxFileSize>
+        </triggeringPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>[%d{YYYY-MM-dd HH:mm:ss.SSS}][%-5level][thread=%thread][class=%logger] - %msg%n</Pattern>
+        </layout>
+    </appender>
+
+    <appender name="PLUGIN_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/resilience-agent/resilience-agent-${com.netcracker.resilienceagent.serverName}-plugin.log</file>
+        <Append>true</Append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <FileNamePattern>logs/resilience-agent/resilience-agent-${com.netcracker.resilienceagent.serverName}-plugin_%i.log.zip</FileNamePattern>
+            <MinIndex>1</MinIndex>
+            <MaxIndex>2</MaxIndex>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>5MB</MaxFileSize>
+        </triggeringPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>[%d{YYYY-MM-dd HH:mm:ss.SSS}][%-5level][thread=%thread] - %msg%n</Pattern>
+        </layout>
+    </appender>
+
+    <appender name="METRICS_FILE" class="com.netcracker.resilience.metrics.MetricsFileAppender">
+        <file>logs/resilience-agent/resilience-agent-${com.netcracker.resilienceagent.serverName}-metrics.html</file>
+        <Append>true</Append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <FileNamePattern>logs/resilience-agent/resilience-agent-${com.netcracker.resilienceagent.serverName}-metrics_%i.html.zip</FileNamePattern>
+            <MinIndex>1</MinIndex>
+            <MaxIndex>6</MaxIndex>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>15MB</MaxFileSize>
+        </triggeringPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%msg%n</Pattern>
+        </layout>
+    </appender>
+
+    <appender name="BREAKER_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/resilience-agent/resilience-agent-${com.netcracker.resilienceagent.serverName}-breaker.log</file>
+        <Append>true</Append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <FileNamePattern>logs/resilience-agent/resilience-agent-${com.netcracker.resilienceagent.serverName}-breaker_%i.log.zip</FileNamePattern>
+            <MinIndex>1</MinIndex>
+            <MaxIndex>3</MaxIndex>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>5MB</MaxFileSize>
+        </triggeringPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>[%d{YYYY-MM-dd HH:mm:ss.SSS}] %msg%n</Pattern>
+        </layout>
+    </appender>
+
+    <logger name="com.netcracker.resilience.agent.plugins.ResilienceAgentPluginLoggerImpl" additivity="false" level="INFO">
+        <appender-ref ref="PLUGIN_FILE" />
+    </logger>
+
+    <logger name="com.netcracker.resilience.metrics.MetricsLogger" additivity="false" level="INFO">
+        <appender-ref ref="METRICS_FILE" />
+    </logger>
+
+    <logger name="com.netcracker.resilience.breaker.BreakerLogger" additivity="false" level="INFO">
+        <appender-ref ref="BREAKER_FILE" />
+    </logger>
+
+    <root>
+        <if condition='isDefined("RESILIENCE_AGENT_LOG_LEVEL") &amp;&amp; ("${RESILIENCE_AGENT_LOG_LEVEL}".equalsIgnoreCase("trace") || "${RESILIENCE_AGENT_LOG_LEVEL}".equalsIgnoreCase("debug") || "${RESILIENCE_AGENT_LOG_LEVEL}".equalsIgnoreCase("info") || "${RESILIENCE_AGENT_LOG_LEVEL}".equalsIgnoreCase("warn") || "${RESILIENCE_AGENT_LOG_LEVEL}".equalsIgnoreCase("error") || "${RESILIENCE_AGENT_LOG_LEVEL}".equalsIgnoreCase("off"))'>
+            <then>
+                <level value="${RESILIENCE_AGENT_LOG_LEVEL:-info}" />
+            </then>
+            <else>
+                <level value="info" />
+            </else>
+        </if>
+        <appender-ref ref="FILE" />
+    </root>
+</configuration>

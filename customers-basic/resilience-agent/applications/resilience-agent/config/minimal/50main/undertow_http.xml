@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resilience-configuration>
+    <enhancer>undertow_http</enhancer>
+    <!-- WildFly(JBoss) <= 26 use Undertow <= 2.2.x with Java EE (javax.servlet.*)  -->
+    <ruleset if-enhancer="undertow_http">
+        <rule>
+            <class>io.undertow.servlet.core.ApplicationListeners</class>
+            <method>requestInitialized</method>
+            <create-span name="web.request.in"/>
+            <method-editor>UndertowRequestHandler</method-editor>
+            <break-point/>
+        </rule>
+    </ruleset>
+</resilience-configuration>

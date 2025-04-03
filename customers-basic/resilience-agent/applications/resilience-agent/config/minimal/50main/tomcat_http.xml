@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resilience-configuration>
+    <enhancer>tomcat_http</enhancer>
+    <!-- Tomcat <= 9 with Java EE (javax.servlet.*) -->
+    <ruleset if-enhancer="tomcat_http">
+        <rule>
+            <class>org.apache.catalina.core.StandardEngineValve</class>
+            <method>invoke</method>
+            <create-span name="web.request.in"/>
+            <method-editor>TomcatRequestHandler</method-editor>
+            <break-point/>
+        </rule>
+
+        <!--apache + spring.webapplicationtype=servlet-->
+        <rule>
+            <class>org.springframework.web.servlet.mvc.method.annotation.ReactiveTypeHandler$AbstractEmitterSubscriber</class>
+            <method>run</method>
+            <execute-after exception="true">run$resilienceagent(throwable)</execute-after>
+        </rule>
+        <rule>
+            <class>reactor.netty.http.server.HttpTrafficHandler</class>
+            <method>channelRead</method>
+            <execute-after exception="true">channelRead$resilienceagent(p1, p2,throwable)</execute-after>
+        </rule>
+    </ruleset>
+</resilience-configuration>

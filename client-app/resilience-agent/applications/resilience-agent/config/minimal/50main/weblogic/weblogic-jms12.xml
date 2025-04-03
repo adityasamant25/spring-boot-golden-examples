@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resilience-configuration>
+    <enhancer>wl_jms12</enhancer>
+    <ruleset if-enhancer="wl_jms12">
+        <rule> <!-- Weblogic 9+ -->
+            <class>weblogic.jms.client.JMSSession</class>
+            <method>onMessage(ConsumerInternal,MessageListener,MessageImpl)</method>
+            <execute-before static="true">bind$resilienceagent(p2)</execute-before>
+            <create-span name="java.jms.in"/>
+            <break-point/>
+        </rule>
+        <rule><!-- Weblogic 9 -->
+            <class>weblogic.ejb.container.internal.MDListener</class>
+            <method>run</method>
+            <execute-before>bind$resilienceagent</execute-before>
+            <create-span name="java.jms.in"/>
+            <break-point/>
+        </rule>
+    </ruleset>
+</resilience-configuration>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resilience-configuration>
+    <enhancer>springrest</enhancer>
+    <ruleset if-enhancer="springrest">
+        <rule>
+            <class>org.springframework.web.client.RestTemplate</class>
+            <method>doExecute(URI, HttpMethod,...)</method>
+            <execute-before>logRequestParameters$resilienceagent(p1, p2)</execute-before>
+            <create-span name="web.request.out"/>
+            <break-point/>
+        </rule>
+    </ruleset>
+</resilience-configuration>

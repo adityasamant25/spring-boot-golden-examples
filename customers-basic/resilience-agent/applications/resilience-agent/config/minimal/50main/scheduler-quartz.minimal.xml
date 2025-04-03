@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resilience-configuration>
+    <enhancer>quartz</enhancer>
+    <ruleset>
+        <rule>
+            <class>com.netcracker.platform.scheduler.impl.jobs.AbstractJobImpl</class>
+            <method>execute(JobExecutionContext)</method>
+            <execute-before>bind$resilienceagent(p1)</execute-before>
+            <create-span name="job"/>
+        </rule>
+        <rule>
+            <class>com.netcracker.platform.scheduler.impl.jobs.*</class>
+            <extends>com.netcracker.platform.scheduler.impl.jobs.AbstractJobImpl</extends>
+            <method>runJob</method>
+            <break-point/>
+        </rule>
+    </ruleset>
+</resilience-configuration>

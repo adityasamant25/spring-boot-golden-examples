@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resilience-configuration>
+    <enhancer>jetty_http</enhancer>
+    <!-- Jetty <= 9 with Java EE (javax.servlet.*) -->
+    <ruleset if-enhancer="jetty_http">
+        <rule>
+            <class>org.eclipse.jetty.servlet.ServletHandler</class>
+            <method>doHandle</method>
+            <create-span name="web.request.in"/>
+            <method-editor>JettyRequestHandler</method-editor>
+            <break-point/>
+        </rule>
+    </ruleset>
+</resilience-configuration>

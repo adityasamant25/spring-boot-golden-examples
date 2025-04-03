@@ -16,10 +16,15 @@ spec:
         app: springboot-customers-basic
     spec:
       containers:
-        - image: adityasamantlearnings/springboot-customers-basic:0.0.6
+        - image: adityasamantlearnings/springboot-customers-basic:0.0.7-SNAPSHOT
           name: springboot-customers-basic
           imagePullPolicy: Always
           env:
+            - name: JAVA_TOOL_OPTIONS
+              value: "-Xms406m -Xmx406m -Xss512k -XX:+UseG1GC -XX:MetaspaceSize=220m\
+                  \ -XX:MaxMetaspaceSize=220m -XX:ReservedCodeCacheSize=128M\
+                  \ -XX:CompressedClassSpaceSize=32M -XX:MinMetaspaceExpansion=1M\
+                  \ -XX:MaxMetaspaceExpansion=8M -XX:CodeCacheExpansionSize=256k"
             - name: TRACING_URL
               value: "http://jaeger-service.tracing.svc.cluster.local:4318/v1/traces"
             - name: GRAYLOG_HOST
@@ -72,10 +77,15 @@ spec:
         app: springboot-client-app
     spec:
       containers:
-        - image: adityasamantlearnings/springboot-client-app:0.0.5
+        - image: adityasamantlearnings/springboot-client-app:0.0.6-SNAPSHOT
           name: client-app
           imagePullPolicy: Always
           env:
+            - name: JAVA_TOOL_OPTIONS
+              value: "-Xms406m -Xmx406m -Xss512k -XX:+UseG1GC -XX:MetaspaceSize=220m\
+                  \ -XX:MaxMetaspaceSize=220m -XX:ReservedCodeCacheSize=128M\
+                  \ -XX:CompressedClassSpaceSize=32M -XX:MinMetaspaceExpansion=1M\
+                  \ -XX:MaxMetaspaceExpansion=8M -XX:CodeCacheExpansionSize=256k"
             - name: CUSTOMERS_BASIC_SERVICE_URL
               value: "http://springboot-customers-basic:8081"
             - name: TRACING_URL

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resilience-configuration>
+    <enhancer>equinox</enhancer>
+    <ruleset>
+        <rule if-enhancer="equinox">
+            <class>org.eclipse.osgi.launch.Equinox</class>
+            <method>&lt;init&gt;(Map)</method>
+            <process-argument static="true" argument="0">addBootDelegation$resilienceagent(p1)</process-argument>
+        </rule>
+    </ruleset>
+</resilience-configuration>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resilience-configuration>
+    <enhancer>undertow23_http</enhancer>
+    <!-- WildFly(JBoss) >= 27 use Undertow >= 2.3.x with Jakarta EE 10 (jakarta.servlet.*)  -->
+    <ruleset if-enhancer="undertow23_http">
+        <rule>
+            <class>io.undertow.servlet.core.ApplicationListeners</class>
+            <method>requestInitialized</method>
+            <create-span name="web.request.in"/>
+            <method-editor>Undertow23RequestHandler</method-editor>
+            <break-point/>
+        </rule>
+    </ruleset>
+</resilience-configuration>

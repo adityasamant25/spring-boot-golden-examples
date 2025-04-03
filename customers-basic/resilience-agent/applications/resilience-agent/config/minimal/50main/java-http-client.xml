@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resilience-configuration>
+    <enhancer>java_http_client</enhancer>
+    <ruleset>
+        <rule>
+            <class>sun.net.www.http.HttpClient</class>
+            <method>parseHTTP</method>
+            <execute-before>bindHttpRequest$resilienceagent</execute-before>
+            <create-span name="web.request.out"/>
+            <break-point/>
+        </rule>
+    </ruleset>
+</resilience-configuration>

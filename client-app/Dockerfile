@@ -1,4 +1,5 @@
 FROM eclipse-temurin:21-jre-ubi9-minimal
 VOLUME /tmp
 COPY target/*.jar app.jar
+COPY resilience-agent /resilience-agent
 ENTRYPOINT ["java","-jar","/app.jar"]

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resilience-configuration>
+    <enhancer>http</enhancer>
+    <enhancer>wl_http</enhancer>
+    <ruleset>
+        <rule>
+            <class>weblogic.servlet.internal.WebAppServletContext$ServletInvocationAction</class>
+            <class-modifier>final</class-modifier>
+            <method>run</method>
+            <create-span name="web.request.in"/>
+            <method-editor>Weblogic92ServletInvocationAction_run</method-editor>
+            <break-point/>
+        </rule>
+    </ruleset>
+    <ruleset>
+        <rule>
+            <class>weblogic.servlet.internal.WebAppServletContext$ServletInvocationAction</class>
+            <method>run</method>
+            <create-span name="web.request.in"/>
+            <method-editor>Weblogic81ServletInvocationAction_run</method-editor>
+            <break-point/>
+        </rule>
+    </ruleset>
+</resilience-configuration>
