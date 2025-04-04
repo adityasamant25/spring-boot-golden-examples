@@ -24,7 +24,10 @@ spec:
               value: "-Xms406m -Xmx406m -Xss512k -XX:+UseG1GC -XX:MetaspaceSize=220m\
                   \ -XX:MaxMetaspaceSize=220m -XX:ReservedCodeCacheSize=128M\
                   \ -XX:CompressedClassSpaceSize=32M -XX:MinMetaspaceExpansion=1M\
-                  \ -XX:MaxMetaspaceExpansion=8M -XX:CodeCacheExpansionSize=256k"
+                  \ -XX:MaxMetaspaceExpansion=8M -XX:CodeCacheExpansionSize=256k\
+                  \ -javaagent:/resilience-agent/applications/resilience-agent/lib/agent.jar\
+                  \ -Dresilience-agent.home=/resilience-agent/applications/resilience-agent\
+                  \ -Dresilience-agent.config=/resilience-agent/applications/resilience-agent/config/_config.xml"
             - name: TRACING_URL
               value: "http://jaeger-service.tracing.svc.cluster.local:4318/v1/traces"
             - name: GRAYLOG_HOST
@@ -85,7 +88,10 @@ spec:
               value: "-Xms406m -Xmx406m -Xss512k -XX:+UseG1GC -XX:MetaspaceSize=220m\
                   \ -XX:MaxMetaspaceSize=220m -XX:ReservedCodeCacheSize=128M\
                   \ -XX:CompressedClassSpaceSize=32M -XX:MinMetaspaceExpansion=1M\
-                  \ -XX:MaxMetaspaceExpansion=8M -XX:CodeCacheExpansionSize=256k"
+                  \ -XX:MaxMetaspaceExpansion=8M -XX:CodeCacheExpansionSize=256k\
+                  \ -javaagent:/resilience-agent/applications/resilience-agent/lib/agent.jar\
+                  \ -Dresilience-agent.home=/resilience-agent/applications/resilience-agent\
+                  \ -Dresilience-agent.config=/resilience-agent/applications/resilience-agent/config/_config.xml"
             - name: CUSTOMERS_BASIC_SERVICE_URL
               value: "http://springboot-customers-basic:8081"
             - name: TRACING_URL
